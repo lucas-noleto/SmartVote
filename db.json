@@ -1,0 +1,30 @@
+{
+    "partidos": [
+      { "sigla": "PT", "nome": "Partido dos Trabalhadores" },
+      { "sigla": "PSDB", "nome": "Partido da Social Democracia Brasileira" },
+      { "sigla": "MDB", "nome": "Movimento Democrático Brasileiro" }
+    ],
+    "candidatos": [
+      {
+        "nome": "João Silva",
+        "foto": "url_da_foto_joao",
+        "partido": { "sigla": "PT" },
+        "cargo": "Presidente",
+        "propostas": {"proposta":"Melhorar a educação"},
+        "redes_sociais": { "twitter": "@joaopt"},
+        "contato": "joaopt@exemplo.com",
+        "numero": 13
+      },
+      {
+        "nome": "Maria Souza",
+        "foto": "url_da_foto_maria",
+        "partido": { "sigla": "PSDB" },
+        "cargo": "Governador",
+        "propostas": "Aumentar a segurança pública",
+        "redes_sociais": { "twitter": "@mariapsdb" },
+        "contato": "mariapsdb@exemplo.com",
+        "numero": 45
+      }
+    ]
+  }
+  
