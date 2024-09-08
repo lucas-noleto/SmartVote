@@ -1,6 +1,4 @@
-
-// BotaoPartido.tsx
-import React from 'react';
+import styles from './BotaoPartido.module.css';
 
 interface Partido {
   nome: string;
@@ -12,7 +10,11 @@ function BotaoPartido({ partido }: { partido: Partido }) {
     alert(`Listar candidatos do partido: ${partido.nome}`);
   };
 
-  return <button onClick={listarCandidatosPorPartido}>{partido.sigla}</button>;
+  return (
+    <button className={styles.BotaoPartido} onClick={listarCandidatosPorPartido}>
+      {partido.sigla}
+    </button>
+  );
 }
 
 export default BotaoPartido;

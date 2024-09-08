@@ -2,7 +2,8 @@
     "partidos": [
       { "sigla": "PT", "nome": "Partido dos Trabalhadores" },
       { "sigla": "PSDB", "nome": "Partido da Social Democracia Brasileira" },
-      { "sigla": "MDB", "nome": "Movimento Democrático Brasileiro" }
+      { "sigla": "MDB", "nome": "Movimento Democrático Brasileiro" },
+      { "sigla": "PL", "nome": "Partido Livre" }
     ],
     "candidatos": [
       {

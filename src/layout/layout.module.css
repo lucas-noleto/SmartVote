@@ -1,0 +1,10 @@
+/* Estilo geral para o conteúdo principal */
+.main-content {
+    padding-top: 60px; /* Espaço suficiente para a Navbar */
+  }
+
+.container {
+display: flex;
+flex-direction: column;
+padding-top: 50px; /* Ajuste conforme necessário para o tamanho da Navbar */
+}

@@ -1,17 +1,17 @@
 import React from 'react';
-import './Navbar.Module.css'; // Adicione seu arquivo CSS aqui
+import styles from './Navbar.module.css'; // Adicione seu arquivo CSS aqui
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="navbar">
-      <div className="container">
+    <nav className={styles.navbar}>
+      <div className={styles.container}>
         {/* Nome da empresa */}
-        <div className="brand">
+        <div className={styles.brand}>
           <h1>SmartVote</h1>
         </div>
 
         {/* Links e barra de busca */}
-        <ul className="nav-links">
+        <ul className={styles.nav_links}>
           <li><a href="/candidatos">Candidatos</a></li>
           <li><a href="/master">Master</a></li>
         </ul>

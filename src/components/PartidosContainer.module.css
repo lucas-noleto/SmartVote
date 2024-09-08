@@ -1,0 +1,43 @@
+.partidosContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  justify-content: flex-start;
+  padding-left: 10.4%; /* Ajusta a posição horizontal */
+}
+
+.todosPartidosBtn {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.partidosBotoes {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.todosPartidosBtn:hover {
+  background-color: #45a049;
+}
+
+
+@media (max-width: 768px) {
+  .partidosBotoes {
+    width: 100%;
+  }
+}

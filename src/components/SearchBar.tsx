@@ -1,16 +1,16 @@
-import React from 'react';
-import './SearchBar.Module.css';
+
+import styles from './SearchBar.module.css';
 import { FaSearch } from 'react-icons/fa';
 
 function SearchBar() {
   return (
-    <div className="search-container">
+    <div className={styles.search_container}>
       <input 
         type="text" 
-        className="search-input" 
+        className={styles.search_input} 
         placeholder="Buscar por nome" 
       />
-      <FaSearch className="search-icon" />
+      <FaSearch className={styles.search_icon} />
     </div>
   );
 }

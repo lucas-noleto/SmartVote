@@ -1,11 +1,11 @@
-.search-container {
+.search_container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 100px; /* Ajusta a distância da barra em relação à navbar */
   }
   
-  .search-input {
+  .search_input {
     width: 80%;
     padding: 10px;
     border-radius: 5px;
@@ -13,7 +13,7 @@
     font-size: 16px;
   }
   
-  .search-icon {
+  .search_icon {
     margin-left: -40px;
     color: #888;
     cursor: pointer;

@@ -1,0 +1,83 @@
+.table img {
+    border-radius: 50%;
+  }
+ 
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 75px; /* Ajusta a distância da barra em relação à navbar */
+}
+
+.container_table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0; /* Ajusta a distância da barra em relação à navbar */
+  padding-top: 0;
+}
+
+.styled_table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled_table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled_table th,
+.styled_table td {
+    padding: 12px 15px;
+}
+
+.styled_table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled_table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled_table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.styled_table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+
+.todosPartidosBtn {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+
+.todosPartidosBtn:hover {
+  background-color: #45a049;
+}
+
+/* Estilo adicional para alinhamento */
+.createButtonContainer {
+  display: flex;
+  justify-content: flex-end; /* Alinha à direita, acima da tabela */
+  margin-bottom: 0;
+  margin-right: 18%;
+  margin-top: 0;
+  padding-bottom: 0;
+}

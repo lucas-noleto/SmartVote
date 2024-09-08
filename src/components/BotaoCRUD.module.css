@@ -1,0 +1,47 @@
+.buttonBase {
+  padding: 10px 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  color: white;
+}
+
+/* Botão verde */
+.btnSuccess {
+  background-color: #4CAF50;
+}
+
+.btnSuccess:hover {
+  background-color: #45a049;
+}
+
+/* Botão azul */
+.btnPrimary {
+  background-color: #0275d8; /* Azul */
+}
+
+.btnPrimary:hover {
+  background-color: #025aa5; /* Hover mais escuro */
+}
+
+/* Botão amarelo */
+.btnWarning {
+  background-color: #f0ad4e;
+}
+
+.btnWarning:hover {
+  background-color: #ec971f;
+}
+
+/* Botão vermelho */
+.btnDanger {
+  background-color: #d9534f;
+}
+
+.btnDanger:hover {
+  background-color: #c9302c;
+}
