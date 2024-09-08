@@ -27,7 +27,7 @@
 }
 
 .styled_table thead tr {
-  background-color: #009879;
+  background-color:  #4CAF50;
   color: #ffffff;
   text-align: left;
 }
@@ -46,7 +46,7 @@
 }
 
 .styled_table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid  #4CAF50;
 }
 
 .styled_table tbody tr.active-row {

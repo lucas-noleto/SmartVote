@@ -6,13 +6,15 @@
   
   body {
     margin: 0;
+
   }
   
   .navbar {
     background-color: #333;
-    padding: 10px 20px;
+    padding: 0px 20px;
     position: fixed;
     width: 100%;
+    height: auto;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -28,6 +30,7 @@
   .brand h1 {
     color: white;
     padding-left: 20px; /* Ajusta a distância do nome à esquerda */
+    
   }
   
   .nav_links {
@@ -61,4 +64,7 @@
     margin-left: 5px;
     cursor: pointer;
   }
-  
+  /* Ajuste do espaçamento superior do conteúdo principal */
+  main {
+    padding-top: 80px; /* Ajuste conforme a altura da Navbar */
+  }
