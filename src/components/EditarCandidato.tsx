@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import useCandidatos from '../Hooks/useCandidatos'; // Importa o hook
+import { useNavigate, useParams } from 'react-router-dom';
 
-const FormularioCandidato: React.FC = () => {
+const EditarCandidato: React.FC = () => {
+  const [candidato, setCandidato] = useState<any>(null);
   const [nome, setNome] = useState('');
   const [foto, setFoto] = useState('');
   const [partido, setPartido] = useState('');
@@ -12,9 +12,24 @@ const FormularioCandidato: React.FC = () => {
   const [novaProposta, setNovaProposta] = useState('');
   const [email, setEmail] = useState('');
   const [numero, setNumero] = useState('');
-  
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { adicionarCandidato } = useCandidatos(); // Usa a função adicionarCandidato do hook
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/candidatos/${id}`)
+      .then(response => {
+        const candidatoData = response.data;
+        setCandidato(candidatoData);
+        setNome(candidatoData.nome);
+        setFoto(candidatoData.foto);
+        setPartido(candidatoData.partido.sigla);
+        setCargo(candidatoData.cargo);
+        setPropostas(candidatoData.propostas);
+        setEmail(candidatoData.email);
+        setNumero(candidatoData.numero);
+      })
+      .catch(error => console.error('Erro ao buscar candidato:', error));
+  }, [id]);
 
   const handleAddProposta = () => {
     setPropostas([...propostas, novaProposta]);
@@ -22,19 +37,18 @@ const FormularioCandidato: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    const novoCandidato = { nome, foto, partido, cargo, propostas, email, numero };
+    const candidatoAtualizado = { nome, foto, partido, cargo, propostas, email, numero };
     
-    axios.post('http://localhost:5000/candidatos', novoCandidato)
-      .then(response => {
-        adicionarCandidato(response.data); // Adiciona o novo candidato ao estado global
-        navigate('/master'); // Redireciona para a página de candidatos após criação
-      })
-      .catch(error => console.error(error));
+    axios.put(`http://localhost:5000/candidatos/${id}`, candidatoAtualizado)
+      .then(() => navigate('/master'))
+      .catch(error => console.error('Erro ao atualizar candidato:', error));
   };
+
+  if (!candidato) return <div>Carregando...</div>;
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Cadastrar Novo Candidato</h2>
+      <h2 className="mb-4">Editar Candidato</h2>
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
         <div className="mb-3">
           <label htmlFor="nome" className="form-label">Nome</label>
@@ -57,8 +71,6 @@ const FormularioCandidato: React.FC = () => {
             <option value="presidente">Presidente</option>
           </select>
         </div>
-        
-        {/* Propostas */}
         <div className="mb-3">
           {propostas.map((proposta, index) => (
             <div key={index} className="alert alert-info">{proposta}</div>
@@ -68,8 +80,6 @@ const FormularioCandidato: React.FC = () => {
             <button type="button" className="btn btn-primary" onClick={handleAddProposta}>Adicionar Proposta</button>
           </div>
         </div>
-        
-        {/* Redes sociais e contato */}
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email de Contato</label>
           <input type="email" className="form-control" id="email" placeholder="Email de Contato" value={email} onChange={e => setEmail(e.target.value)} />
@@ -78,11 +88,10 @@ const FormularioCandidato: React.FC = () => {
           <label htmlFor="numero" className="form-label">Número do Candidato</label>
           <input type="text" className="form-control" id="numero" placeholder="Número do Candidato" value={numero} onChange={e => setNumero(e.target.value)} />
         </div>
-        
-        <button type="submit" className="btn btn-success">Cadastrar</button>
+        <button type="submit" className="btn btn-success">Salvar</button>
       </form>
     </div>
   );
 };
 
-export default FormularioCandidato;
+export default EditarCandidato;

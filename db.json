@@ -1,31 +1,88 @@
 {
-    "partidos": [
-      { "sigla": "PT", "nome": "Partido dos Trabalhadores" },
-      { "sigla": "PSDB", "nome": "Partido da Social Democracia Brasileira" },
-      { "sigla": "MDB", "nome": "Movimento Democrático Brasileiro" },
-      { "sigla": "PL", "nome": "Partido Livre" }
-    ],
-    "candidatos": [
-      {
-        "nome": "João Silva",
-        "foto": "url_da_foto_joao",
-        "partido": { "sigla": "PT" },
-        "cargo": "Presidente",
-        "propostas": {"proposta":"Melhorar a educação"},
-        "redes_sociais": { "twitter": "@joaopt"},
-        "contato": "joaopt@exemplo.com",
-        "numero": 13
+  "partidos": [
+    {
+      "sigla": "PT",
+      "nome": "Partido dos Trabalhadores",
+      "id": "df2d"
+    },
+    {
+      "sigla": "PSDB",
+      "nome": "Partido da Social Democracia Brasileira",
+      "id": "6384"
+    },
+    {
+      "sigla": "MDB",
+      "nome": "Movimento Democrático Brasileiro",
+      "id": "d2fe"
+    },
+    {
+      "sigla": "PL",
+      "nome": "Partido Livre",
+      "id": "8bea"
+    }
+  ],
+  "candidatos": [
+    {
+      "id": "1",
+      "nome": "João Silva",
+      "foto": "url_da_foto_joao",
+      "partido": {
+        "sigla": "PT"
       },
-      {
-        "nome": "Maria Souza",
-        "foto": "url_da_foto_maria",
-        "partido": { "sigla": "PSDB" },
-        "cargo": "Governador",
-        "propostas": "Aumentar a segurança pública",
-        "redes_sociais": { "twitter": "@mariapsdb" },
-        "contato": "mariapsdb@exemplo.com",
-        "numero": 45
-      }
-    ]
-  }
-  
+      "cargo": "Presidente",
+      "propostas": [
+        "Melhorar a educação"
+      ],
+      "redes_sociais": {
+        "twitter": "@joaopt"
+      },
+      "contato": "joaopt@exemplo.com",
+      "numero": 13
+    },
+    {
+      "id": "2",
+      "nome": "Maria Souza",
+      "foto": "url_da_foto_maria",
+      "partido": {
+        "sigla": "PSDB"
+      },
+      "cargo": "Governador",
+      "propostas": [
+        "Aumentar a segurança pública"
+      ],
+      "redes_sociais": {
+        "twitter": "@mariapsdb"
+      },
+      "contato": "mariapsdb@exemplo.com",
+      "numero": 45
+    },
+    {
+      "nome": "Lucas Noleto",
+      "foto": "asdsaasa",
+      "partido": "",
+      "cargo": "prefeito",
+      "propostas": [
+        "educacao",
+        "saued",
+        "saneamento basico"
+      ],
+      "email": "lucas_noleto@outloo.com",
+      "numero": "12311",
+      "id": "c110"
+    }
+  ],
+  "intencao_votos": [
+    {
+      "id": "1",
+      "nome": "Carlos Almeida",
+      "email": "carlos.almeida@exemplo.com",
+      "candidatoId": 1
+    },
+    {
+      "id": "2",
+      "nome": "Ana Costa",
+      "email": "ana.costa@exemplo.com",
+      "candidatoId": 2
+    }
+  ]
+}

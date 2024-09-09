@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Candidato } from '../types/types';
@@ -10,7 +10,23 @@ interface TabelaCandidatosProps {
 }
 
 const TabelaCandidatos: React.FC<TabelaCandidatosProps> = ({ candidatos }) => {
+  const [localCandidatos, setLocalCandidatos] = useState<Candidato[]>(candidatos);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    // Função para buscar candidatos do servidor
+    const fetchCandidatos = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/candidatos');
+        setLocalCandidatos(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar candidatos:', error);
+      }
+    };
+
+    // Atualiza a lista de candidatos quando o componente é montado ou quando a navegação retorna
+    fetchCandidatos();
+  }, [navigate]);
 
   // Funções de ação
   const handleCreate = () => {
@@ -25,7 +41,8 @@ const TabelaCandidatos: React.FC<TabelaCandidatosProps> = ({ candidatos }) => {
     if (window.confirm("Tem certeza que deseja excluir este candidato?")) {
       axios.delete(`http://localhost:5000/candidatos/${id}`)
         .then(() => {
-          window.location.reload(); // Atualiza a página após exclusão
+          // Atualiza a lista local após exclusão
+          setLocalCandidatos(prev => prev.filter(candidato => candidato.id !== id));
         })
         .catch(error => console.error('Erro ao excluir candidato:', error));
     }
@@ -36,19 +53,16 @@ const TabelaCandidatos: React.FC<TabelaCandidatosProps> = ({ candidatos }) => {
   };
 
   return (
-    <div >
+    <div>
       <div className={styles.container}>
-          <div>
-              <h2>Lista de Candidatos</h2>
-          </div>
-           
-      </div>
-    
-      
-      <div className={styles.createButtonContainer}>
-          <Botao onClick={handleCreate} texto="Criar Novo Candidato" tipo="criar" />
+        <div>
+          <h2>Lista de Candidatos</h2>
         </div>
+      </div>
 
+      <div className={styles.createButtonContainer}>
+        <Botao onClick={handleCreate} texto="Criar Novo Candidato" tipo="criar" />
+      </div>
 
       <div className={styles.container_table}>  
         <table className={styles.styled_table}>
@@ -63,32 +77,32 @@ const TabelaCandidatos: React.FC<TabelaCandidatosProps> = ({ candidatos }) => {
               <th>Ações</th>
             </tr>
           </thead>
-            <tbody>
-              {candidatos.map((candidato) => (
-                <tr key={candidato.id}>
-                  <td>
-                    <img
-                      src={candidato.foto}
-                      alt={candidato.nome}
-                      style={{ width: '50px' }}
-                    />
-                  </td>
-                  <td>{candidato.nome}</td>
-                  <td>{candidato.partido.sigla}</td>
-                  <td>{candidato.cargo}</td>
-                  <td>{typeof candidato.propostas === 'string' ? candidato.propostas : candidato.propostas.proposta}</td>
-                  <td>{candidato.numero}</td>
-                  <td>
-                    <Botao onClick={() => handleView(candidato.id)} texto="Visualizar" tipo="visualizar" />
-                    <Botao onClick={() => handleEdit(candidato.id)} texto="Editar" tipo="editar" />
-                    <Botao onClick={() => handleDelete(candidato.id)} texto="Excluir" tipo="excluir" />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <tbody>
+            {localCandidatos.map((candidato) => (
+              <tr key={candidato.id}>
+                <td>
+                  <img
+                    src={candidato.foto}
+                    alt={candidato.nome}
+                    style={{ width: '50px' }}
+                  />
+                </td>
+                <td>{candidato.nome}</td>
+                <td>{candidato.partido.sigla}</td>
+                <td>{candidato.cargo}</td>
+                <td>{typeof candidato.propostas === 'string' ? candidato.propostas : candidato.propostas.proposta}</td>
+                <td>{candidato.numero}</td>
+                <td>
+                  <Botao onClick={() => handleView(candidato.id)} texto="Visualizar" tipo="visualizar" />
+                  <Botao onClick={() => handleEdit(candidato.id)} texto="Editar" tipo="editar" />
+                  <Botao onClick={() => handleDelete(candidato.id)} texto="Excluir" tipo="excluir" />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-</div>
   );
 };
 

@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Candidato } from './types/types';
 import Layout from './layout/layout';
+import VisualizarCandidato from './components/VisualizarCandidato';
+import EditarCandidato from './components/EditarCandidato';
+
 
 const App = () => {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
@@ -40,8 +43,8 @@ const App = () => {
           } 
         />
         <Route path="/master/create" element={<Layout showSearchBar={false}><FormularioCandidato /></Layout>} />
-        <Route path="/master/edit/:id" element={<Layout showSearchBar={false}><FormularioCandidato /></Layout>} />
-        <Route path="/master/view/:id" element={<Layout showSearchBar={false}><FormularioCandidato /></Layout>} />
+        <Route path="/master/edit/:id" element={<Layout showSearchBar={false}><EditarCandidato /></Layout>} />
+        <Route path="/master/view/:id" element={<Layout showSearchBar={false}><VisualizarCandidato /></Layout>} />
       </Routes>
     </Router>
   );
