@@ -82,7 +82,7 @@ const Home: React.FC = () => {
                   {candidato.propostas.map((proposta, index) => (
                     <li key={index}>{proposta}</li>
                   ))}
-                </ul>
+                </ul> 
               </div>
             </div>
           ))
