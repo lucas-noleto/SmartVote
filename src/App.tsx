@@ -1,16 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import SearchBar from './components/SearchBar';
-import PartidosContainer from './components/PartidosContainer';
+import Home from './components/Home';
 import TabelaCandidatos from './components/TabelaCandidatos';
 import FormularioCandidato from './components/FormularioCandidato';
+import EditarCandidato from './components/EditarCandidato';
+import VisualizarCandidato from './components/VisualizarCandidato';
+import Layout from './layout/Layout';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Candidato } from './types/types';
-import Layout from './layout/layout';
-import VisualizarCandidato from './components/VisualizarCandidato';
-import EditarCandidato from './components/EditarCandidato';
-
 
 const App = () => {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
@@ -23,28 +21,13 @@ const App = () => {
 
   return (
     <Router>
+      <Navbar />
       <Routes>
-        {/* Página inicial (não exibe TabelaCandidatos) */}
-        <Route 
-          path="/" 
-          element={
-            <Layout showSearchBar={true}>
-              {/* Outros componentes aqui */}
-            </Layout>
-          } 
-        />
-        {/* Outras páginas (exibem TabelaCandidatos) */}
-        <Route 
-          path="/master" 
-          element={
-            <Layout showSearchBar={false}>
-              <TabelaCandidatos candidatos={candidatos} />
-            </Layout>
-          } 
-        />
-        <Route path="/master/create" element={<Layout showSearchBar={false}><FormularioCandidato /></Layout>} />
-        <Route path="/master/edit/:id" element={<Layout showSearchBar={false}><EditarCandidato /></Layout>} />
-        <Route path="/master/view/:id" element={<Layout showSearchBar={false}><VisualizarCandidato /></Layout>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/master" element={<TabelaCandidatos candidatos={candidatos} />} />
+        <Route path="/master/create" element={<FormularioCandidato />} />
+        <Route path="/master/edit/:id" element={<EditarCandidato />} />
+        <Route path="/master/view/:id" element={<VisualizarCandidato />} />
       </Routes>
     </Router>
   );

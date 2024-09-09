@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Candidato } from '../types/types';
 import Botao from './BotaoCRUD';
-import styles from './TabelaCandidatos.module.css'
+import styles from './TabelaCandidatos.module.css';
 
 interface TabelaCandidatosProps {
   candidatos: Candidato[];
@@ -90,12 +90,23 @@ const TabelaCandidatos: React.FC<TabelaCandidatosProps> = ({ candidatos }) => {
                 <td>{candidato.nome}</td>
                 <td>{candidato.partido.sigla}</td>
                 <td>{candidato.cargo}</td>
-                <td>{typeof candidato.propostas === 'string' ? candidato.propostas : candidato.propostas.proposta}</td>
+                <td>
+                  {/* Renderiza as propostas como uma lista separada por linha */}
+                  {candidato.propostas.join(', ')}
+                </td>
                 <td>{candidato.numero}</td>
                 <td>
                   <Botao onClick={() => handleView(candidato.id)} texto="Visualizar" tipo="visualizar" />
                   <Botao onClick={() => handleEdit(candidato.id)} texto="Editar" tipo="editar" />
                   <Botao onClick={() => handleDelete(candidato.id)} texto="Excluir" tipo="excluir" />
+                </td>
+                <td>
+                  {/* Verifica se redes_sociais está definido antes de renderizar */}
+                  {candidato.redes_sociais && Object.entries(candidato.redes_sociais).map(([rede, link]) => (
+                    <a key={rede} href={link} target="_blank" rel="noopener noreferrer" className={styles.redeSocialLink}>
+                      <i className={`fa fa-${rede}`} aria-hidden="true" />
+                    </a>
+                  ))}
                 </td>
               </tr>
             ))}

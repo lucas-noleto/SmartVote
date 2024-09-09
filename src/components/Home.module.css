@@ -1,0 +1,49 @@
+.homeContainer {
+    padding: 20px;
+  }
+  
+  .candidatosContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .candidatoCard {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 48%; /* Ajusta para dois candidatos por linha */
+  }
+  
+  .candidatoFoto {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .candidatoInfo {
+    margin-left: 20px;
+  }
+  
+  .candidatoNome {
+    font-size: 1.25rem;
+  }
+  
+  .candidatoNumero {
+    font-size: 0.875rem;
+  }
+  
+  .redesSociais {
+    margin-top: 10px;
+  }
+  
+  .redeSocialLink {
+    margin-right: 10px;
+  }
+  
+  .redeSocialLink i {
+    font-size: 24px;
+  }
+  

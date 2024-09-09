@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import useCandidatos from '../Hooks/useCandidatos'; // Importa o hook
 
 const FormularioCandidato: React.FC = () => {
   const [nome, setNome] = useState('');
@@ -12,9 +11,15 @@ const FormularioCandidato: React.FC = () => {
   const [novaProposta, setNovaProposta] = useState('');
   const [email, setEmail] = useState('');
   const [numero, setNumero] = useState('');
+  const [partidos, setPartidos] = useState<{ sigla: string; nome: string }[]>([]);
   
   const navigate = useNavigate();
-  const { adicionarCandidato } = useCandidatos(); // Usa a função adicionarCandidato do hook
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/partidos')
+      .then(response => setPartidos(response.data))
+      .catch(error => console.error('Erro ao buscar partidos:', error));
+  }, []);
 
   const handleAddProposta = () => {
     setPropostas([...propostas, novaProposta]);
@@ -23,12 +28,9 @@ const FormularioCandidato: React.FC = () => {
 
   const handleSubmit = () => {
     const novoCandidato = { nome, foto, partido, cargo, propostas, email, numero };
-    
+
     axios.post('http://localhost:5000/candidatos', novoCandidato)
-      .then(response => {
-        adicionarCandidato(response.data); // Adiciona o novo candidato ao estado global
-        navigate('/master'); // Redireciona para a página de candidatos após criação
-      })
+      .then(() => navigate('/master'))
       .catch(error => console.error(error));
   };
 
@@ -36,18 +38,30 @@ const FormularioCandidato: React.FC = () => {
     <div className="container mt-5">
       <h2 className="mb-4">Cadastrar Novo Candidato</h2>
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+        {/* Nome */}
         <div className="mb-3">
           <label htmlFor="nome" className="form-label">Nome</label>
           <input type="text" className="form-control" id="nome" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
         </div>
+        
+        {/* URL da Foto */}
         <div className="mb-3">
           <label htmlFor="foto" className="form-label">URL da Foto</label>
           <input type="text" className="form-control" id="foto" placeholder="URL da Foto" value={foto} onChange={e => setFoto(e.target.value)} />
         </div>
+
+        {/* Partido */}
         <div className="mb-3">
           <label htmlFor="partido" className="form-label">Partido</label>
-          <input type="text" className="form-control" id="partido" placeholder="Partido" value={partido} onChange={e => setPartido(e.target.value)} />
+          <select className="form-select" id="partido" value={partido} onChange={e => setPartido(e.target.value)}>
+            <option value="">Selecione um partido</option>
+            {partidos.map(partido => (
+              <option key={partido.sigla} value={partido.sigla}>{partido.sigla}</option>
+            ))}
+          </select>
         </div>
+
+        {/* Cargo */}
         <div className="mb-3">
           <label htmlFor="cargo" className="form-label">Cargo</label>
           <select className="form-select" id="cargo" value={cargo} onChange={e => setCargo(e.target.value)}>
@@ -68,17 +82,19 @@ const FormularioCandidato: React.FC = () => {
             <button type="button" className="btn btn-primary" onClick={handleAddProposta}>Adicionar Proposta</button>
           </div>
         </div>
-        
-        {/* Redes sociais e contato */}
+
+        {/* Email de Contato */}
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email de Contato</label>
           <input type="email" className="form-control" id="email" placeholder="Email de Contato" value={email} onChange={e => setEmail(e.target.value)} />
         </div>
+
+        {/* Número do Candidato */}
         <div className="mb-3">
           <label htmlFor="numero" className="form-label">Número do Candidato</label>
           <input type="text" className="form-control" id="numero" placeholder="Número do Candidato" value={numero} onChange={e => setNumero(e.target.value)} />
         </div>
-        
+
         <button type="submit" className="btn btn-success">Cadastrar</button>
       </form>
     </div>

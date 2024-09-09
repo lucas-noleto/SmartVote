@@ -1,37 +1,47 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import BotaoPartido from './BotaoPartido';
 import styles from './PartidosContainer.module.css';
 
 interface Partido {
-  nome: string;
   sigla: string;
+  nome: string;
 }
 
-function PartidosContainer() {
+interface PartidosContainerProps {
+  onFiltro: (partido: string) => void;
+}
+
+const PartidosContainer: React.FC<PartidosContainerProps> = ({ onFiltro }) => {
   const [partidos, setPartidos] = useState<Partido[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/partidos')
-      .then(response => setPartidos(response.data))
-      .catch(error => console.error(error));
-  }, []);
+    const fetchPartidos = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/partidos');
+        setPartidos(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar partidos:', error);
+      }
+    };
 
-  const listarTodosCandidatos = () => {
-    alert("Listar todos os candidatos de todos os partidos");
-  };
+    fetchPartidos();
+  }, []);
 
   return (
     <div className={styles.partidosContainer}>
-    <button className={styles.todosPartidosBtn}>Todos os Partidos</button>
-    {partidos.map((partido) => (
-      <button key={partido.sigla} className={styles.todosPartidosBtn}>
-        {partido.sigla}
+      {/* Botão para buscar todos os candidatos */}
+      <button onClick={() => onFiltro('todos')} className={styles.todosPartidosBtn}>
+        Todos os Candidatos
       </button>
-    ))}
-  </div>
-  
+
+      {/* Botões para filtrar candidatos por partido */}
+      {partidos.map(partido => (
+        <button key={partido.sigla} onClick={() => onFiltro(partido.sigla)} className={styles.todosPartidosBtn}>
+          {partido.sigla}
+        </button>
+      ))}
+    </div>
   );
-}
+};
 
 export default PartidosContainer;

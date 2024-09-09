@@ -23,21 +23,15 @@
   ],
   "candidatos": [
     {
-      "id": "1",
       "nome": "João Silva",
       "foto": "url_da_foto_joao",
-      "partido": {
-        "sigla": "PT"
-      },
+      "partido": "PSDB",
       "cargo": "Presidente",
       "propostas": [
         "Melhorar a educação"
       ],
-      "redes_sociais": {
-        "twitter": "@joaopt"
-      },
-      "contato": "joaopt@exemplo.com",
-      "numero": 13
+      "numero": 13,
+      "id": "1"
     },
     {
       "id": "2",
@@ -59,7 +53,7 @@
     {
       "nome": "Lucas Noleto",
       "foto": "asdsaasa",
-      "partido": "",
+      "partido": "PL",
       "cargo": "prefeito",
       "propostas": [
         "educacao",
@@ -69,6 +63,44 @@
       "email": "lucas_noleto@outloo.com",
       "numero": "12311",
       "id": "c110"
+    },
+    {
+      "nome": "Morales",
+      "foto": "adasd",
+      "partido": "PT",
+      "cargo": "prefeito",
+      "propostas": [
+        "sadasda"
+      ],
+      "email": "asdasda@gmail.com",
+      "numero": "121",
+      "id": "8162"
+    },
+    {
+      "id": "d691",
+      "nome": "Dan Trajano",
+      "foto": "url_url",
+      "partido": "PSDB",
+      "cargo": "prefeito",
+      "propostas": [
+        "educacao",
+        "esportes"
+      ],
+      "email": "dan_trajano@gmail.com",
+      "numero": "123122"
+    },
+    {
+      "id": "39bd",
+      "nome": "Silvana Nunes",
+      "foto": "lucas_foto",
+      "partido": "PL",
+      "cargo": "prefeito",
+      "propostas": [
+        "asdasd",
+        "adsad"
+      ],
+      "email": "silva@gamil.com",
+      "numero": "111"
     }
   ],
   "intencao_votos": [
