@@ -7,7 +7,9 @@ const Navbar: React.FC = () => {
       <div className={styles.container}>
         {/* Nome da empresa */}
         <div className={styles.brand}>
-          <h1>SmartVote</h1>
+          <a href="/">
+            <h1>SmartVote</h1>
+          </a>
         </div>
 
         {/* Links e barra de busca */}

@@ -20,6 +20,10 @@
     z-index: 1000;
   }
   
+  .navbar a{
+    text-decoration: none;
+  }
+
   .container {
     display: flex;
     justify-content: space-between;
@@ -46,6 +50,7 @@
   .nav_links a {
     color: white;
     text-decoration: none;
+    
   }
   
   .search_bar {
@@ -68,3 +73,5 @@
   main {
     padding-top: 80px; /* Ajuste conforme a altura da Navbar */
   }
+
+  
