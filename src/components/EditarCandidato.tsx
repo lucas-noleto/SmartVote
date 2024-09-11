@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
 const EditarCandidato: React.FC = () => {
   const [candidato, setCandidato] = useState<any>(null);
@@ -15,6 +16,10 @@ const EditarCandidato: React.FC = () => {
   const [partidos, setPartidos] = useState<{ sigla: string; nome: string }[]>([]);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [facebook, setFacebook] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [linkedin, setLinkedin] = useState('');
+  const [youtube, setYoutube] = useState('');
 
   useEffect(() => {
     axios.get('http://localhost:5000/partidos')
@@ -32,6 +37,10 @@ const EditarCandidato: React.FC = () => {
         setPropostas(candidatoData.propostas);
         setEmail(candidatoData.email);
         setNumero(candidatoData.numero);
+        setFacebook(candidatoData.redes_sociais?.facebook || '');
+        setInstagram(candidatoData.redes_sociais?.instagram || '');
+        setLinkedin(candidatoData.redes_sociais?.linkedin || '');
+        setYoutube(candidatoData.redes_sociais?.youtube || '');
       })
       .catch(error => console.error('Erro ao buscar candidato:', error));
   }, [id]);
@@ -42,8 +51,8 @@ const EditarCandidato: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    const candidatoAtualizado = { nome, foto, partido, cargo, propostas, email, numero };
-
+    const candidatoAtualizado = { nome, foto, partido, cargo, propostas, redes_sociais: { facebook, instagram, linkedin, youtube }, email, numero };
+ 
     axios.put(`http://localhost:5000/candidatos/${id}`, candidatoAtualizado)
       .then(() => navigate('/master'))
       .catch(error => console.error('Erro ao atualizar candidato:', error));
@@ -111,6 +120,26 @@ const EditarCandidato: React.FC = () => {
           <label htmlFor="numero" className="form-label">Número do Candidato</label>
           <input type="text" className="form-control" id="numero" placeholder="Número do Candidato" value={numero} onChange={e => setNumero(e.target.value)} />
         </div>
+          
+        <div className="mb-3">
+        <h4>Redes Sociais</h4>
+        <div className="input-group mb-2">
+          <span className="input-group-text"><FaFacebook /></span>
+          <input type="text" className="form-control" placeholder="Facebook" value={facebook} onChange={e => setFacebook(e.target.value)} />
+        </div>
+        <div className="input-group mb-2">
+          <span className="input-group-text"><FaInstagram /></span>
+          <input type="text" className="form-control" placeholder="Instagram" value={instagram} onChange={e => setInstagram(e.target.value)} />
+        </div>
+        <div className="input-group mb-2">
+          <span className="input-group-text"><FaLinkedin /></span>
+          <input type="text" className="form-control" placeholder="LinkedIn" value={linkedin} onChange={e => setLinkedin(e.target.value)} />
+        </div>
+        <div className="input-group mb-2">
+          <span className="input-group-text"><FaYoutube /></span>
+          <input type="text" className="form-control" placeholder="YouTube" value={youtube} onChange={e => setYoutube(e.target.value)} />
+        </div>
+      </div>
 
         <button type="submit" className="btn btn-success">Salvar</button>
       </form>

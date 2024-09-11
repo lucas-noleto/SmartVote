@@ -1,49 +1,84 @@
 .homeContainer {
-    padding: 20px;
-  }
-  
-  .candidatosContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .candidatoCard {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 15px;
-    margin-bottom: 20px;
-    width: 48%; /* Ajusta para dois candidatos por linha */
-  }
-  
-  .candidatoFoto {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-  }
-  
-  .candidatoInfo {
-    margin-left: 20px;
-  }
-  
-  .candidatoNome {
-    font-size: 1.25rem;
-  }
-  
-  .candidatoNumero {
-    font-size: 0.875rem;
-  }
-  
-  .redesSociais {
-    margin-top: 10px;
-  }
-  
-  .redeSocialLink {
-    margin-right: 10px;
-  }
-  
-  .redeSocialLink i {
-    font-size: 24px;
-  }
-  
+  padding: 20px;
+}
+
+.searchBarContainer {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.partidosContainer {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.candidatosContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Centraliza horizontalmente */
+  width: 80%; /* Ajusta a largura para 80% da tela */
+  margin: 0 auto; /* Centraliza o container de candidatos */
+}
+
+.candidatoCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 15px;
+  margin: 10px; /* Adiciona margem para espaçamento */
+  width: calc(50% - 20px); /* Ajusta a largura para duas colunas */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.candidatoFoto {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.candidatoInfo {
+  margin-left: 20px;
+}
+
+.candidatoNome {
+  font-size: 1.25rem;
+}
+
+.candidatoNumero {
+  font-size: 0.875rem;
+}
+
+.verMaisBtn {
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+
+.verMaisBtn:hover {
+  background-color: #555;
+}
+
+.candidatoDetalhes {
+  margin-top: 10px;
+}
+
+.redesSociais {
+  margin-top: 10px;
+}
+
+.redeSocialLink {
+  margin-right: 10px;
+  color: #333;
+  font-size: 24px;
+}
+
+.redeSocialLink:hover {
+  color: #555;
+}

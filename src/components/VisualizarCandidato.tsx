@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube,FaEnvelope } from 'react-icons/fa';
 
 const VisualizarCandidato: React.FC = () => {
   const [candidato, setCandidato] = useState<any>(null);
@@ -60,6 +61,15 @@ const VisualizarCandidato: React.FC = () => {
           <label htmlFor="numero" className="form-label">Número do Candidato</label>
           <input type="text" className="form-control" id="numero" value={candidato.numero} readOnly />
         </div>
+
+        <div className="mb-3">
+        <h4>Redes Sociais</h4>
+        <p><FaFacebook /> Facebook: {candidato.redes_sociais?.facebook || 'Não informado'}</p>
+        <p><FaInstagram /> Instagram: {candidato.redes_sociais?.instagram || 'Não informado'}</p>
+        <p><FaLinkedin /> LinkedIn: {candidato.redes_sociais?.linkedin || 'Não informado'}</p>
+        <p><FaYoutube /> YouTube: {candidato.redes_sociais?.youtube || 'Não informado'}</p>
+        <p><FaEnvelope /> Email: {candidato.email}</p>
+      </div>
 
         <button type="button" className="btn btn-secondary" onClick={() => navigate(`/master/edit/${id}`)}>Editar</button>
       </form>

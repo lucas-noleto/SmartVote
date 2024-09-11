@@ -12,11 +12,11 @@
 
 /* Botão verde */
 .btnSuccess {
-  background-color: #4CAF50;
+  background-color: #333;
 }
 
 .btnSuccess:hover {
-  background-color: #45a049;
+  background-color: #555;
 }
 
 /* Botão azul */

@@ -4,12 +4,14 @@ import SearchBar from './SearchBar';
 import PartidosContainer from './PartidosContainer';
 import styles from './Home.module.css';
 import { Candidato } from '../types/types';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa'; // Importando ícones de redes sociais
 
 const Home: React.FC = () => {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
   const [candidatosFiltrados, setCandidatosFiltrados] = useState<Candidato[]>([]);
   const [busca, setBusca] = useState<string>('');
   const [filtro, setFiltro] = useState<string>('todos');
+  const [expandido, setExpandido] = useState<string | null>(null); // Estado para controlar a expansão
 
   // Função para buscar candidatos com base no filtro
   const fetchCandidatos = async (partido: string) => {
@@ -47,7 +49,7 @@ const Home: React.FC = () => {
         if (typeof candidato.partido === 'string') {
           return candidato.partido === filtro;
         } else {
-          return candidato.partido.sigla === filtro;
+          return candidato.partido?.sigla === filtro;
         }
       });
     }
@@ -61,6 +63,10 @@ const Home: React.FC = () => {
 
   const handleBusca = () => {
     setBusca(busca);
+  };
+
+  const toggleExpand = (id: string) => {
+    setExpandido(expandido === id ? null : id); // Alterna entre expandir e recolher
   };
 
   return (
@@ -82,7 +88,39 @@ const Home: React.FC = () => {
                   {candidato.propostas.map((proposta, index) => (
                     <li key={index}>{proposta}</li>
                   ))}
-                </ul> 
+                </ul>
+                {expandido === candidato.id ? (
+                  <div className={styles.candidatoDetalhes}>
+                    <p><strong>Partido:</strong> {typeof candidato.partido === 'string' ? candidato.partido : candidato.partido?.sigla || 'Não informado'}</p>
+                    <p><strong>Cargo:</strong> {candidato.cargo}</p>
+                    <p><strong>Redes sociais:</strong></p>
+                    <div className={styles.redesSociais}>
+                      {candidato.redes_sociais?.facebook && (
+                        <a href={candidato.redes_sociais.facebook} target="_blank" rel="noopener noreferrer" className={styles.redeSocialLink}>
+                          <FaFacebookF />
+                        </a>
+                      )}
+                      {candidato.redes_sociais?.twitter && (
+                        <a href={candidato.redes_sociais.twitter} target="_blank" rel="noopener noreferrer" className={styles.redeSocialLink}>
+                          <FaTwitter />
+                        </a>
+                      )}
+                      {candidato.redes_sociais?.instagram && (
+                        <a href={candidato.redes_sociais.instagram} target="_blank" rel="noopener noreferrer" className={styles.redeSocialLink}>
+                          <FaInstagram />
+                        </a>
+                      )}
+                      {candidato.redes_sociais?.linkedin && (
+                        <a href={candidato.redes_sociais.linkedin} target="_blank" rel="noopener noreferrer" className={styles.redeSocialLink}>
+                          <FaLinkedin />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ) : null}
+                <button onClick={() => toggleExpand(candidato.id)} className={styles.verMaisBtn}>
+                  {expandido === candidato.id ? 'Ver Menos' : 'Ver Mais'}
+                </button>
               </div>
             </div>
           ))

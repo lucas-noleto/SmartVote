@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaEnvelope } from 'react-icons/fa';
+
 
 const FormularioCandidato: React.FC = () => {
   const [nome, setNome] = useState('');
@@ -9,10 +11,14 @@ const FormularioCandidato: React.FC = () => {
   const [cargo, setCargo] = useState('prefeito');
   const [propostas, setPropostas] = useState<string[]>([]);
   const [novaProposta, setNovaProposta] = useState('');
-  const [email, setEmail] = useState('');
   const [numero, setNumero] = useState('');
   const [partidos, setPartidos] = useState<{ sigla: string; nome: string }[]>([]);
-  
+  const [facebook, setFacebook] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [linkedin, setLinkedin] = useState('');
+  const [youtube, setYoutube] = useState('');
+  const [email, setEmail] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,9 +32,10 @@ const FormularioCandidato: React.FC = () => {
     setNovaProposta('');
   };
 
+  
   const handleSubmit = () => {
-    const novoCandidato = { nome, foto, partido, cargo, propostas, email, numero };
-
+    const novoCandidato = { nome, foto, partido, cargo, propostas, redes_sociais: { facebook, instagram, linkedin, youtube }, email, numero };
+    
     axios.post('http://localhost:5000/candidatos', novoCandidato)
       .then(() => navigate('/master'))
       .catch(error => console.error(error));
@@ -94,6 +101,31 @@ const FormularioCandidato: React.FC = () => {
           <label htmlFor="numero" className="form-label">Número do Candidato</label>
           <input type="text" className="form-control" id="numero" placeholder="Número do Candidato" value={numero} onChange={e => setNumero(e.target.value)} />
         </div>
+
+         {/* Redes Sociais */}
+      <div className="mb-3">
+        <h4>Redes Sociais</h4>
+        <div className="input-group mb-2">
+          <span className="input-group-text"><FaFacebook /></span>
+          <input type="text" className="form-control" placeholder="Facebook" value={facebook} onChange={e => setFacebook(e.target.value)} />
+        </div>
+        <div className="input-group mb-2">
+          <span className="input-group-text"><FaInstagram /></span>
+          <input type="text" className="form-control" placeholder="Instagram" value={instagram} onChange={e => setInstagram(e.target.value)} />
+        </div>
+        <div className="input-group mb-2">
+          <span className="input-group-text"><FaLinkedin /></span>
+          <input type="text" className="form-control" placeholder="LinkedIn" value={linkedin} onChange={e => setLinkedin(e.target.value)} />
+        </div>
+        <div className="input-group mb-2">
+          <span className="input-group-text"><FaYoutube /></span>
+          <input type="text" className="form-control" placeholder="YouTube" value={youtube} onChange={e => setYoutube(e.target.value)} />
+        </div>
+        <div className="input-group mb-2">
+          <span className="input-group-text"><FaEnvelope /></span>
+          <input type="email" className="form-control" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+        </div>
+      </div>
 
         <button type="submit" className="btn btn-success">Cadastrar</button>
       </form>

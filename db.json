@@ -58,8 +58,15 @@
       "propostas": [
         "educacao",
         "saued",
-        "saneamento basico"
+        "saneamento basico",
+        "yt9876"
       ],
+      "redes_sociais": {
+        "facebook": "lucas_facebok",
+        "instagram": "lucas_instagram",
+        "linkedin": "lucas_likedin",
+        "youtube": "lucas_ytb"
+      },
       "email": "lucas_noleto@outloo.com",
       "numero": "12311",
       "id": "c110"
@@ -77,7 +84,6 @@
       "id": "8162"
     },
     {
-      "id": "d691",
       "nome": "Dan Trajano",
       "foto": "url_url",
       "partido": "PSDB",
@@ -86,8 +92,15 @@
         "educacao",
         "esportes"
       ],
+      "redes_sociais": {
+        "facebook": "https://www.youtube.com/@LinkinPark/videos",
+        "instagram": "https://www.youtube.com/@LinkinPark/videos",
+        "linkedin": "https://www.youtube.com/@LinkinPark/videos",
+        "youtube": "https://www.youtube.com/@LinkinPark/videos"
+      },
       "email": "dan_trajano@gmail.com",
-      "numero": "123122"
+      "numero": "123122",
+      "id": "d691"
     },
     {
       "id": "39bd",
