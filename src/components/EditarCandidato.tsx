@@ -58,6 +58,17 @@ const EditarCandidato: React.FC = () => {
       .catch(error => console.error('Erro ao atualizar candidato:', error));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFoto(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   if (!candidato) return <div>Carregando...</div>;
 
   return (
@@ -70,10 +81,11 @@ const EditarCandidato: React.FC = () => {
           <input type="text" className="form-control" id="nome" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
         </div>
 
-        {/* URL da Foto */}
+        {/* Foto */}
         <div className="mb-3">
-          <label htmlFor="foto" className="form-label">URL da Foto</label>
-          <input type="text" className="form-control" id="foto" placeholder="URL da Foto" value={foto} onChange={e => setFoto(e.target.value)} />
+          <label htmlFor="foto" className="form-label">Foto</label>
+          <input type="file" className="form-control" id="foto" onChange={handleFileChange} />
+          {foto && <img src={foto} alt="Preview" style={{ marginTop: '10px', maxWidth: '100px', maxHeight: '100px' }} />}
         </div>
 
         {/* Partido */}
@@ -120,26 +132,27 @@ const EditarCandidato: React.FC = () => {
           <label htmlFor="numero" className="form-label">Número do Candidato</label>
           <input type="text" className="form-control" id="numero" placeholder="Número do Candidato" value={numero} onChange={e => setNumero(e.target.value)} />
         </div>
-          
+
+        {/* Redes Sociais */}
         <div className="mb-3">
-        <h4>Redes Sociais</h4>
-        <div className="input-group mb-2">
-          <span className="input-group-text"><FaFacebook /></span>
-          <input type="text" className="form-control" placeholder="Facebook" value={facebook} onChange={e => setFacebook(e.target.value)} />
+          <h4>Redes Sociais</h4>
+          <div className="input-group mb-2">
+            <span className="input-group-text"><FaFacebook /></span>
+            <input type="text" className="form-control" placeholder="Facebook" value={facebook} onChange={e => setFacebook(e.target.value)} />
+          </div>
+          <div className="input-group mb-2">
+            <span className="input-group-text"><FaInstagram /></span>
+            <input type="text" className="form-control" placeholder="Instagram" value={instagram} onChange={e => setInstagram(e.target.value)} />
+          </div>
+          <div className="input-group mb-2">
+            <span className="input-group-text"><FaLinkedin /></span>
+            <input type="text" className="form-control" placeholder="LinkedIn" value={linkedin} onChange={e => setLinkedin(e.target.value)} />
+          </div>
+          <div className="input-group mb-2">
+            <span className="input-group-text"><FaYoutube /></span>
+            <input type="text" className="form-control" placeholder="YouTube" value={youtube} onChange={e => setYoutube(e.target.value)} />
+          </div>
         </div>
-        <div className="input-group mb-2">
-          <span className="input-group-text"><FaInstagram /></span>
-          <input type="text" className="form-control" placeholder="Instagram" value={instagram} onChange={e => setInstagram(e.target.value)} />
-        </div>
-        <div className="input-group mb-2">
-          <span className="input-group-text"><FaLinkedin /></span>
-          <input type="text" className="form-control" placeholder="LinkedIn" value={linkedin} onChange={e => setLinkedin(e.target.value)} />
-        </div>
-        <div className="input-group mb-2">
-          <span className="input-group-text"><FaYoutube /></span>
-          <input type="text" className="form-control" placeholder="YouTube" value={youtube} onChange={e => setYoutube(e.target.value)} />
-        </div>
-      </div>
 
         <button type="submit" className="btn btn-success">Salvar</button>
       </form>

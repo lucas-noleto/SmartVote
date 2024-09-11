@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube,FaEnvelope } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaEnvelope } from 'react-icons/fa';
 
 const VisualizarCandidato: React.FC = () => {
   const [candidato, setCandidato] = useState<any>(null);
@@ -26,10 +26,10 @@ const VisualizarCandidato: React.FC = () => {
           <input type="text" className="form-control" id="nome" value={candidato.nome} readOnly />
         </div>
 
-        {/* URL da Foto */}
+        {/* Foto */}
         <div className="mb-3">
-          <label htmlFor="foto" className="form-label">URL da Foto</label>
-          <input type="text" className="form-control" id="foto" value={candidato.foto} readOnly />
+          <label htmlFor="foto" className="form-label">Foto</label>
+          {candidato.foto && <img src={candidato.foto} alt="Candidato" style={{ marginTop: '10px', maxWidth: '100px', maxHeight: '100px' }} />}
         </div>
 
         {/* Partido */}
@@ -62,14 +62,15 @@ const VisualizarCandidato: React.FC = () => {
           <input type="text" className="form-control" id="numero" value={candidato.numero} readOnly />
         </div>
 
+        {/* Redes Sociais */}
         <div className="mb-3">
-        <h4>Redes Sociais</h4>
-        <p><FaFacebook /> Facebook: {candidato.redes_sociais?.facebook || 'Não informado'}</p>
-        <p><FaInstagram /> Instagram: {candidato.redes_sociais?.instagram || 'Não informado'}</p>
-        <p><FaLinkedin /> LinkedIn: {candidato.redes_sociais?.linkedin || 'Não informado'}</p>
-        <p><FaYoutube /> YouTube: {candidato.redes_sociais?.youtube || 'Não informado'}</p>
-        <p><FaEnvelope /> Email: {candidato.email}</p>
-      </div>
+          <h4>Redes Sociais</h4>
+          <p><FaFacebook /> Facebook: {candidato.redes_sociais?.facebook || 'Não informado'}</p>
+          <p><FaInstagram /> Instagram: {candidato.redes_sociais?.instagram || 'Não informado'}</p>
+          <p><FaLinkedin /> LinkedIn: {candidato.redes_sociais?.linkedin || 'Não informado'}</p>
+          <p><FaYoutube /> YouTube: {candidato.redes_sociais?.youtube || 'Não informado'}</p>
+          <p><FaEnvelope /> Email: {candidato.email}</p>
+        </div>
 
         <button type="button" className="btn btn-secondary" onClick={() => navigate(`/master/edit/${id}`)}>Editar</button>
       </form>

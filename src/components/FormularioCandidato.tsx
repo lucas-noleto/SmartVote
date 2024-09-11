@@ -3,10 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaEnvelope } from 'react-icons/fa';
 
-
 const FormularioCandidato: React.FC = () => {
   const [nome, setNome] = useState('');
-  const [foto, setFoto] = useState('');
+  const [foto, setFoto] = useState<string | ArrayBuffer | null>(''); // Alterado para suportar a imagem em Base64
   const [partido, setPartido] = useState('');
   const [cargo, setCargo] = useState('prefeito');
   const [propostas, setPropostas] = useState<string[]>([]);
@@ -32,10 +31,29 @@ const FormularioCandidato: React.FC = () => {
     setNovaProposta('');
   };
 
-  
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFoto(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = () => {
-    const novoCandidato = { nome, foto, partido, cargo, propostas, redes_sociais: { facebook, instagram, linkedin, youtube }, email, numero };
-    
+    const novoCandidato = {
+      nome,
+      foto,
+      partido,
+      cargo,
+      propostas,
+      redes_sociais: { facebook, instagram, linkedin, youtube },
+      email,
+      numero
+    };
+
     axios.post('http://localhost:5000/candidatos', novoCandidato)
       .then(() => navigate('/master'))
       .catch(error => console.error(error));
@@ -50,11 +68,12 @@ const FormularioCandidato: React.FC = () => {
           <label htmlFor="nome" className="form-label">Nome</label>
           <input type="text" className="form-control" id="nome" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
         </div>
-        
-        {/* URL da Foto */}
+
+        {/* Upload da Foto */}
         <div className="mb-3">
-          <label htmlFor="foto" className="form-label">URL da Foto</label>
-          <input type="text" className="form-control" id="foto" placeholder="URL da Foto" value={foto} onChange={e => setFoto(e.target.value)} />
+          <label htmlFor="foto" className="form-label">Foto</label>
+          <input type="file" className="form-control" id="foto" accept="image/*" onChange={handleImageUpload} />
+          {foto && <img src={foto as string} alt="Foto do Candidato" className="mt-3" style={{ maxWidth: '200px' }} />}
         </div>
 
         {/* Partido */}
@@ -78,7 +97,7 @@ const FormularioCandidato: React.FC = () => {
             <option value="presidente">Presidente</option>
           </select>
         </div>
-        
+
         {/* Propostas */}
         <div className="mb-3">
           {propostas.map((proposta, index) => (
@@ -102,30 +121,30 @@ const FormularioCandidato: React.FC = () => {
           <input type="text" className="form-control" id="numero" placeholder="Número do Candidato" value={numero} onChange={e => setNumero(e.target.value)} />
         </div>
 
-         {/* Redes Sociais */}
-      <div className="mb-3">
-        <h4>Redes Sociais</h4>
-        <div className="input-group mb-2">
-          <span className="input-group-text"><FaFacebook /></span>
-          <input type="text" className="form-control" placeholder="Facebook" value={facebook} onChange={e => setFacebook(e.target.value)} />
+        {/* Redes Sociais */}
+        <div className="mb-3">
+          <h4>Redes Sociais</h4>
+          <div className="input-group mb-2">
+            <span className="input-group-text"><FaFacebook /></span>
+            <input type="text" className="form-control" placeholder="Facebook" value={facebook} onChange={e => setFacebook(e.target.value)} />
+          </div>
+          <div className="input-group mb-2">
+            <span className="input-group-text"><FaInstagram /></span>
+            <input type="text" className="form-control" placeholder="Instagram" value={instagram} onChange={e => setInstagram(e.target.value)} />
+          </div>
+          <div className="input-group mb-2">
+            <span className="input-group-text"><FaLinkedin /></span>
+            <input type="text" className="form-control" placeholder="LinkedIn" value={linkedin} onChange={e => setLinkedin(e.target.value)} />
+          </div>
+          <div className="input-group mb-2">
+            <span className="input-group-text"><FaYoutube /></span>
+            <input type="text" className="form-control" placeholder="YouTube" value={youtube} onChange={e => setYoutube(e.target.value)} />
+          </div>
+          <div className="input-group mb-2">
+            <span className="input-group-text"><FaEnvelope /></span>
+            <input type="email" className="form-control" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+          </div>
         </div>
-        <div className="input-group mb-2">
-          <span className="input-group-text"><FaInstagram /></span>
-          <input type="text" className="form-control" placeholder="Instagram" value={instagram} onChange={e => setInstagram(e.target.value)} />
-        </div>
-        <div className="input-group mb-2">
-          <span className="input-group-text"><FaLinkedin /></span>
-          <input type="text" className="form-control" placeholder="LinkedIn" value={linkedin} onChange={e => setLinkedin(e.target.value)} />
-        </div>
-        <div className="input-group mb-2">
-          <span className="input-group-text"><FaYoutube /></span>
-          <input type="text" className="form-control" placeholder="YouTube" value={youtube} onChange={e => setYoutube(e.target.value)} />
-        </div>
-        <div className="input-group mb-2">
-          <span className="input-group-text"><FaEnvelope /></span>
-          <input type="email" className="form-control" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-        </div>
-      </div>
 
         <button type="submit" className="btn btn-success">Cadastrar</button>
       </form>

@@ -1,3 +1,5 @@
+/* Home.module.css */
+
 .homeContainer {
   padding: 20px;
 }
@@ -15,9 +17,9 @@
 .candidatosContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Centraliza horizontalmente */
-  width: 80%; /* Ajusta a largura para 80% da tela */
-  margin: 0 auto; /* Centraliza o container de candidatos */
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .candidatoCard {
@@ -25,28 +27,79 @@
   border-radius: 8px;
   overflow: hidden;
   padding: 15px;
-  margin: 10px; /* Adiciona margem para espaçamento */
-  width: calc(50% - 20px); /* Ajusta a largura para duas colunas */
+  margin: 10px;
+  width: calc(50% - 20px);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   position: relative;
+}
+
+.candidatoHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .candidatoFoto {
   border-radius: 50%;
   width: 100px;
   height: 100px;
+  margin-right: 15px;
 }
 
-.candidatoInfo {
-  margin-left: 20px;
+.candidatoInfoHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .candidatoNome {
   font-size: 1.25rem;
+  margin: 0;
 }
 
 .candidatoNumero {
   font-size: 0.875rem;
+  margin: 0;
+}
+
+.candidatoDetalhes {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.candidatoPropostas {
+  margin-right: 15px;
+}
+
+.candidatoDetalhesInfo {
+  margin-top: 15px; /* Adiciona margem superior para separar das propostas */
+}
+
+.redesSociais {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px; /* Adiciona margem superior para separar dos detalhes */
+  margin-bottom: 15px; /* Adiciona margem inferior para evitar sobreposição com o botão "Ver Mais" */
+  display: none; /* Inicialmente oculto */
+}
+
+.redesSociais.expanded {
+  display: flex; /* Mostra somente quando o card está expandido */
+}
+
+.redeSocialLink {
+  margin: 0 10px;
+  color: #333;
+  font-size: 24px;
+}
+
+.redeSocialLink:hover {
+  color: #555;
 }
 
 .verMaisBtn {
@@ -56,29 +109,11 @@
   border-radius: 20px;
   padding: 10px 20px;
   cursor: pointer;
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
+  display: block;
+  width: 100%;
+  margin-top: 15px;
 }
 
 .verMaisBtn:hover {
   background-color: #555;
-}
-
-.candidatoDetalhes {
-  margin-top: 10px;
-}
-
-.redesSociais {
-  margin-top: 10px;
-}
-
-.redeSocialLink {
-  margin-right: 10px;
-  color: #333;
-  font-size: 24px;
-}
-
-.redeSocialLink:hover {
-  color: #555;
 }
