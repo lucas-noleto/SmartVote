@@ -5,7 +5,6 @@ import TabelaCandidatos from './components/TabelaCandidatos';
 import FormularioCandidato from './components/FormularioCandidato/FormularioCandidato';
 import EditarCandidato from './components/EditarCandidato';
 import VisualizarCandidato from './components/VisualizarCandidato';
-import Layout from './layout/Layout';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Candidato } from './types/types';

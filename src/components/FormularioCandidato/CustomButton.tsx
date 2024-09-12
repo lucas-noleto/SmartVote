@@ -1,6 +1,5 @@
 // src/components/FormularioCandidato/CustomButton.tsx
 import React from 'react';
-import styles from './FormularioCandidato.module.css';
 
 interface CustomButtonProps {
   texto: string;
