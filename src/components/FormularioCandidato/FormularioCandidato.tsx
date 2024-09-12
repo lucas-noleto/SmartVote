@@ -1,8 +1,10 @@
-// src/components/FormularioCandidato/FormularioCandidato.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SocialMediaField from './SocialMediaField';
+import PropostaList from './PropostaList';
+import FormField from './FormField';
+import CustomButton from './CustomButton';
 import styles from './FormularioCandidato.module.css';
 
 const FormularioCandidato: React.FC = () => {
@@ -19,6 +21,8 @@ const FormularioCandidato: React.FC = () => {
   const [linkedin, setLinkedin] = useState('');
   const [youtube, setYoutube] = useState('');
   const [email, setEmail] = useState('');
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -44,7 +48,11 @@ const FormularioCandidato: React.FC = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (isSubmitting) return; // Previne múltiplas submissões
+
+    setIsSubmitting(true); // Define o estado de envio
+
     const novoCandidato = {
       nome,
       foto,
@@ -56,9 +64,14 @@ const FormularioCandidato: React.FC = () => {
       numero
     };
 
-    axios.post('http://localhost:5000/candidatos', novoCandidato)
-      .then(() => navigate('/master'))
-      .catch(error => console.error(error));
+    try {
+      await axios.post('http://localhost:5000/candidatos', novoCandidato);
+      navigate('/master');
+    } catch (error) {
+      console.error('Erro ao cadastrar candidato:', error);
+    } finally {
+      setIsSubmitting(false); // Restaura o estado de envio
+    }
   };
 
   const handleSocialMediaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,20 +91,21 @@ const FormularioCandidato: React.FC = () => {
       <div className={styles.form_wrapper}>
         <h2 className={styles.form_title}>Cadastrar Novo Candidato</h2>
         <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-          {/* Nome */}
-          <div className="mb-3">
-            <label htmlFor="nome" className="form-label">Nome</label>
-            <input type="text" className="form-control" id="nome" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
-          </div>
+          <FormField
+            id="nome"
+            label="Nome"
+            type="text"
+            value={nome}
+            placeholder="Nome"
+            onChange={(e) => setNome(e.target.value)}
+          />
 
-          {/* Upload da Foto */}
           <div className="mb-3">
             <label htmlFor="foto" className="form-label">Foto</label>
             <input type="file" className="form-control" id="foto" accept="image/*" onChange={handleImageUpload} />
             {foto && <img src={foto as string} alt="Foto do Candidato" className="mt-3" />}
           </div>
 
-          {/* Partido */}
           <div className="mb-3">
             <label htmlFor="partido" className="form-label">Partido</label>
             <select className="form-select" id="partido" value={partido} onChange={e => setPartido(e.target.value)}>
@@ -102,7 +116,6 @@ const FormularioCandidato: React.FC = () => {
             </select>
           </div>
 
-          {/* Cargo */}
           <div className="mb-3">
             <label htmlFor="cargo" className="form-label">Cargo</label>
             <select className="form-select" id="cargo" value={cargo} onChange={e => setCargo(e.target.value)}>
@@ -113,30 +126,34 @@ const FormularioCandidato: React.FC = () => {
             </select>
           </div>
 
-          {/* Propostas */}
-          <div className="mb-3">
-            {propostas.map((proposta, index) => (
-              <div key={index} className="alert alert-info">{proposta}</div>
-            ))}
-            <div className="input-group mb-3">
-              <input type="text" className="form-control" placeholder="Nova Proposta" value={novaProposta} onChange={e => setNovaProposta(e.target.value)} />
-              <button type="button" className="btn btn-primary" onClick={handleAddProposta}>Adicionar Proposta</button>
-            </div>
-          </div>
+          <PropostaList
+            propostas={propostas}
+            novaProposta={novaProposta}
+            onAddProposta={handleAddProposta}
+            onRemoveProposta={(index) => {
+              setPropostas(propostas.filter((_, i) => i !== index));
+            }}
+            onChangeNovaProposta={(e) => setNovaProposta(e.target.value)}
+          />
 
-          {/* Email de Contato */}
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email de Contato</label>
-            <input type="email" className="form-control" id="email" placeholder="Email de Contato" value={email} onChange={e => setEmail(e.target.value)} />
-          </div>
+          <FormField
+            id="email"
+            label="Email de Contato"
+            type="email"
+            value={email}
+            placeholder="Email de Contato"
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-          {/* Número do Candidato */}
-          <div className="mb-3">
-            <label htmlFor="numero" className="form-label">Número do Candidato</label>
-            <input type="text" className="form-control" id="numero" placeholder="Número do Candidato" value={numero} onChange={e => setNumero(e.target.value)} />
-          </div>
+          <FormField
+            id="numero"
+            label="Número do Candidato"
+            type="text"
+            value={numero}
+            placeholder="Número do Candidato"
+            onChange={(e) => setNumero(e.target.value)}
+          />
 
-          {/* Redes Sociais */}
           <SocialMediaField
             facebook={facebook}
             instagram={instagram}
@@ -146,7 +163,12 @@ const FormularioCandidato: React.FC = () => {
             onChange={handleSocialMediaChange}
           />
 
-          <button type="submit" className={`btn btn-success ${styles.btn_custom}`}>Cadastrar</button>
+          <CustomButton
+            texto="Cadastrar"
+            onClick={handleSubmit}
+            estilo={`btn-success ${styles.btn_custom}`}
+            tipo="submit"
+          />
         </form>
       </div>
     </div>
