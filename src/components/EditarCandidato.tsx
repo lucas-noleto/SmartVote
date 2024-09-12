@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
+import EditarPropostaModal from './EditarPropostaModal'; // Importando o modal
 
 const EditarCandidato: React.FC = () => {
   const [candidato, setCandidato] = useState<any>(null);
@@ -9,11 +10,13 @@ const EditarCandidato: React.FC = () => {
   const [foto, setFoto] = useState('');
   const [partido, setPartido] = useState('');
   const [cargo, setCargo] = useState('prefeito');
-  const [propostas, setPropostas] = useState<string[]>([]);
+  const [propostas, setPropostas] = useState<{ texto: string; id: number }[]>([]);
   const [novaProposta, setNovaProposta] = useState('');
   const [email, setEmail] = useState('');
   const [numero, setNumero] = useState('');
   const [partidos, setPartidos] = useState<{ sigla: string; nome: string }[]>([]);
+  const [modalAberto, setModalAberto] = useState(false);
+  const [propostaParaEditar, setPropostaParaEditar] = useState<{ texto: string; id: number } | null>(null);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [facebook, setFacebook] = useState('');
@@ -32,9 +35,9 @@ const EditarCandidato: React.FC = () => {
         setCandidato(candidatoData);
         setNome(candidatoData.nome);
         setFoto(candidatoData.foto);
-        setPartido(candidatoData.partido.sigla || candidatoData.partido); // Use sigla
+        setPartido(candidatoData.partido.sigla || candidatoData.partido);
         setCargo(candidatoData.cargo);
-        setPropostas(candidatoData.propostas);
+        setPropostas(candidatoData.propostas.map((proposta: string, index: number) => ({ texto: proposta, id: index })));
         setEmail(candidatoData.email);
         setNumero(candidatoData.numero);
         setFacebook(candidatoData.redes_sociais?.facebook || '');
@@ -46,13 +49,39 @@ const EditarCandidato: React.FC = () => {
   }, [id]);
 
   const handleAddProposta = () => {
-    setPropostas([...propostas, novaProposta]);
-    setNovaProposta('');
+    if (novaProposta.trim() !== '') {
+      setPropostas([...propostas, { texto: novaProposta, id: Date.now() }]);
+      setNovaProposta('');
+    }
+  };
+
+  const handleEditProposta = (proposta: { texto: string; id: number }) => {
+    setPropostaParaEditar(proposta);
+    setModalAberto(true);
+  };
+
+  const handleRemoveProposta = (id: number) => {
+    setPropostas(propostas.filter(p => p.id !== id));
+  };
+
+  const handleSaveProposta = (novaProposta: string) => {
+    if (propostaParaEditar) {
+      setPropostas(propostas.map(p => p.id === propostaParaEditar.id ? { ...p, texto: novaProposta } : p));
+    }
   };
 
   const handleSubmit = () => {
-    const candidatoAtualizado = { nome, foto, partido, cargo, propostas, redes_sociais: { facebook, instagram, linkedin, youtube }, email, numero };
- 
+    const candidatoAtualizado = {
+      nome,
+      foto,
+      partido,
+      cargo,
+      propostas: propostas.map(p => p.texto),
+      redes_sociais: { facebook, instagram, linkedin, youtube },
+      email,
+      numero
+    };
+
     axios.put(`http://localhost:5000/candidatos/${id}`, candidatoAtualizado)
       .then(() => navigate('/master'))
       .catch(error => console.error('Erro ao atualizar candidato:', error));
@@ -112,8 +141,27 @@ const EditarCandidato: React.FC = () => {
 
         {/* Propostas */}
         <div className="mb-3">
-          {propostas.map((proposta, index) => (
-            <div key={index} className="alert alert-info">{proposta}</div>
+          <h4>Propostas</h4>
+          {propostas.map((proposta) => (
+            <div key={proposta.id} className="alert alert-info d-flex justify-content-between">
+              <span>{proposta.texto}</span>
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-warning btn-sm me-2"
+                  onClick={() => handleEditProposta(proposta)}
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleRemoveProposta(proposta.id)}
+                >
+                  Remover
+                </button>
+              </div>
+            </div>
           ))}
           <div className="input-group mb-3">
             <input type="text" className="form-control" placeholder="Nova Proposta" value={novaProposta} onChange={e => setNovaProposta(e.target.value)} />
@@ -156,6 +204,14 @@ const EditarCandidato: React.FC = () => {
 
         <button type="submit" className="btn btn-success">Salvar</button>
       </form>
+
+      {/* Modal para Editar Proposta */}
+      <EditarPropostaModal
+        isOpen={modalAberto}
+        propostaAtual={propostaParaEditar?.texto || ''}
+        onClose={() => setModalAberto(false)}
+        onSave={handleSaveProposta}
+      />
     </div>
   );
 };

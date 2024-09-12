@@ -72,8 +72,8 @@ const TabelaCandidatos: React.FC<TabelaCandidatosProps> = ({ candidatos }) => {
               <th>Nome</th>
               <th>Partido</th>
               <th>Cargo</th>
-              <th>Número de Propostas</th>
-              <th>Número de Votos</th>
+              <th>Propostas</th>
+              <th>Número </th>
               <th>Ações</th>
             </tr>
           </thead>
