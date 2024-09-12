@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import TabelaCandidatos from './components/TabelaCandidatos';
-import FormularioCandidato from './components/FormularioCandidato';
+import FormularioCandidato from './components/FormularioCandidato/FormularioCandidato';
 import EditarCandidato from './components/EditarCandidato';
 import VisualizarCandidato from './components/VisualizarCandidato';
 import Layout from './layout/Layout';
