@@ -9,6 +9,7 @@ import Layout from './layout/Layout';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Candidato } from './types/types';
+import Estatisticas from './pages/Estatisticas';
 
 const App = () => {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
@@ -24,6 +25,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/estatisticas" element={<Estatisticas />}/>
         <Route path="/master" element={<TabelaCandidatos candidatos={candidatos} />} />
         <Route path="/master/create" element={<FormularioCandidato />} />
         <Route path="/master/edit/:id" element={<EditarCandidato />} />

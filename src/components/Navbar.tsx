@@ -14,8 +14,9 @@ const Navbar: React.FC = () => {
 
         {/* Links e barra de busca */}
         <ul className={styles.nav_links}>
-          <li><a href="/candidatos">Candidatos</a></li>
+          <li><a href="/">Candidatos</a></li>
           <li><a href="/master">Master</a></li>
+          <li><a href="/estatisticas">Estatisticas</a></li>
         </ul>
       </div>
     </nav>

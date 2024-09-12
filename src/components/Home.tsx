@@ -69,15 +69,19 @@ const Home: React.FC = () => {
     setEmail('');
     setCandidatoParaVoto(null);
   };
-  
+
+  const abrirModal = (id: string) => {
+    setCandidatoParaVoto(id);
+    setEmail(''); // Limpa o campo de email ao abrir o modal
+    setModalAberto(true);
+  };
 
   const toggleExpand = (id: string) => {
     setExpandido(expandido === id ? null : id);
   };
 
   const votarCandidato = (id: string) => {
-    setCandidatoParaVoto(id);
-    setModalAberto(true);
+    abrirModal(id);
   };
 
   const confirmarVoto = async () => {
@@ -182,7 +186,6 @@ const Home: React.FC = () => {
         </div>
       </div>
     )}
-
     </div>
   );
 };

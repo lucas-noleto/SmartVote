@@ -1,0 +1,68 @@
+.estatisticasContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-top: 60px; /* Adiciona uma margem superior para garantir que o título não seja coberto pela Navbar */
+  position: relative;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  z-index: 10; /* Garante que o título esteja acima de outros elementos */
+}
+
+.graficoContainer {
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 800px; /* Limita a largura máxima para uma melhor apresentação em telas grandes */
+}
+
+.cargoTitulo {
+  font-size: 24px; /* Aumenta o tamanho da fonte para o título do gráfico */
+  font-weight: bold; /* Destaca o título com negrito */
+  color: #333; /* Cor escura para contraste */
+  margin-bottom: 15px; /* Espaço abaixo do título para separar do gráfico */
+}
+
+.legendContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+}
+
+.candidatoFoto {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.estatisticasInfo {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px; /* Limita a largura máxima para uma melhor apresentação */
+}
+
+.estatisticasItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.estatisticasLegenda {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 4px;
+}
