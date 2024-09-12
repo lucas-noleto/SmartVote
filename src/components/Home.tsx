@@ -4,14 +4,17 @@ import SearchBar from './SearchBar';
 import PartidosContainer from './PartidosContainer';
 import styles from './Home.module.css';
 import { Candidato } from '../types/types';
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa'; 
 
 const Home: React.FC = () => {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
   const [candidatosFiltrados, setCandidatosFiltrados] = useState<Candidato[]>([]);
   const [busca, setBusca] = useState<string>('');
   const [filtro, setFiltro] = useState<string>('todos');
-  const [expandido, setExpandido] = useState<string | null>(null); 
+  const [expandido, setExpandido] = useState<string | null>(null);
+  const [modalAberto, setModalAberto] = useState(false);
+  const [email, setEmail] = useState('');
+  const [mensagemErro, setMensagemErro] = useState<string | null>(null);
+  const [candidatoParaVoto, setCandidatoParaVoto] = useState<string | null>(null);
 
   const fetchCandidatos = async (partido: string) => {
     try {
@@ -19,7 +22,6 @@ const Home: React.FC = () => {
       if (partido !== 'todos') {
         url += `?partido=${partido}`;
       }
-
       const response = await axios.get(url);
       setCandidatos(response.data);
     } catch (error) {
@@ -61,8 +63,51 @@ const Home: React.FC = () => {
     setBusca(busca);
   };
 
+  const fecharModal = () => {
+    setModalAberto(false);
+    setMensagemErro(null);
+    setEmail('');
+    setCandidatoParaVoto(null);
+  };
+  
+
   const toggleExpand = (id: string) => {
     setExpandido(expandido === id ? null : id);
+  };
+
+  const votarCandidato = (id: string) => {
+    setCandidatoParaVoto(id);
+    setModalAberto(true);
+  };
+
+  const confirmarVoto = async () => {
+    if (!candidatoParaVoto || !email) return;
+
+    try {
+      const candidato = candidatos.find(c => c.id === candidatoParaVoto);
+      if (!candidato) return;
+
+      const { data } = await axios.get(`http://localhost:5000/intencao_votos?email=${email}&cargo=${candidato.cargo}`);
+
+      if (data.length > 0) {
+        setMensagemErro(`Você já votou para o cargo de ${candidato.cargo}.`);
+        return;
+      }
+
+      await axios.post('http://localhost:5000/intencao_votos', {
+        candidatoId: candidatoParaVoto,
+        email,
+        cargo: candidato.cargo || 'Não informado',
+        data: new Date().toISOString()
+      });
+
+      console.log(`Voto registrado para o candidato ${candidatoParaVoto}`);
+      setModalAberto(false);
+      setMensagemErro(null);
+    } catch (error) {
+      console.error('Erro ao registrar voto:', error);
+      setMensagemErro('Erro ao registrar voto. Por favor, tente novamente.');
+    }
   };
 
   return (
@@ -99,28 +144,17 @@ const Home: React.FC = () => {
                 )}
               </div>
               {expandido === candidato.id && (
-                <div className={`${styles.redesSociais} ${expandido === candidato.id ? styles.expanded : ''}`}>
-                  {candidato.redes_sociais?.facebook && (
-                    <a href={candidato.redes_sociais.facebook} target="_blank" rel="noopener noreferrer" className={styles.redeSocialLink}>
-                      <FaFacebookF />
-                    </a>
-                  )}
-                  {candidato.redes_sociais?.twitter && (
-                    <a href={candidato.redes_sociais.twitter} target="_blank" rel="noopener noreferrer" className={styles.redeSocialLink}>
-                      <FaTwitter />
-                    </a>
-                  )}
-                  {candidato.redes_sociais?.instagram && (
-                    <a href={candidato.redes_sociais.instagram} target="_blank" rel="noopener noreferrer" className={styles.redeSocialLink}>
-                      <FaInstagram />
-                    </a>
-                  )}
-                  {candidato.redes_sociais?.linkedin && (
-                    <a href={candidato.redes_sociais.linkedin} target="_blank" rel="noopener noreferrer" className={styles.redeSocialLink}>
-                      <FaLinkedin />
-                    </a>
-                  )}
-                </div>
+                <>
+                  <button
+                    onClick={() => votarCandidato(candidato.id)}
+                    className={styles.votarBtn}
+                  >
+                    Votar
+                  </button>
+                  <div className={`${styles.redesSociais} ${expandido === candidato.id ? styles.expanded : ''}`}>
+                    {/* Links das redes sociais */}
+                  </div>
+                </>
               )}
               <button onClick={() => toggleExpand(candidato.id)} className={styles.verMaisBtn}>
                 {expandido === candidato.id ? 'Ver Menos' : 'Ver Mais'}
@@ -129,6 +163,26 @@ const Home: React.FC = () => {
           ))
         )}
       </div>
+
+      {modalAberto && (
+      <div className={styles.modal}>
+        <div className={styles.modalContent}>
+          <h2>Confirme seu voto</h2>
+          <p>Digite seu e-mail para confirmar o voto:</p>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Seu e-mail"
+            className={styles.modalInput}
+          />
+          {mensagemErro && <p className={styles.errorMsg}>{mensagemErro}</p>}
+          <button onClick={confirmarVoto} className={styles.confirmarBtn}>Confirmar Voto</button>
+          <button onClick={fecharModal} className={styles.cancelarBtn}>Cancelar</button>
+        </div>
+      </div>
+    )}
+
     </div>
   );
 };
