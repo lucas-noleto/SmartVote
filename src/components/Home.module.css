@@ -1,4 +1,4 @@
-/* Home.module.css */
+
 
 .homeContainer {
   padding: 20px;
@@ -76,15 +76,15 @@
 }
 
 .candidatoDetalhesInfo {
-  margin-top: 15px; /* Adiciona margem superior para separar das propostas */
+  margin-top: 15px; 
 }
 
 .redesSociais {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 15px; /* Adiciona margem superior para separar dos detalhes */
-  margin-bottom: 15px; /* Adiciona margem inferior para evitar sobreposição com o botão "Ver Mais" */
+  margin-top: 15px; 
+  margin-bottom: 15px; 
   display: none; /* Inicialmente oculto */
 }
 
@@ -120,7 +120,7 @@
 
 .votarBtn,
 .contatoBtn {
-  background-color: #4CAF50; /* Você pode ajustar a cor aqui */
+  background-color: #2ecc71; 
   color: white;
   border: none;
   border-radius: 20px;
@@ -128,17 +128,22 @@
   cursor: pointer;
   display: block;
   width: 100%;
-  margin-top: 10px; /* Espaçamento em relação ao conteúdo acima */
-  margin-bottom: 10px; /* Espaçamento entre o botão votar e "Ver Menos" */
+  margin-top: 10px; 
+  margin-bottom: 10px; 
 }
 
 .votarBtn:hover {
-  background-color: #45a049; /* Efeito hover */
+  background-color: #98FF98; 
 }
 
 .contatoBtn{
-  background-color: #0275d8;
+  background-color: #2980b9;
 }
+
+.contatoBtn:hover{
+  background-color: #87CEEB;
+}
+
 
 /* Escondido inicialmente */
 .votarBtn.hidden {
@@ -150,7 +155,7 @@
   display: block;
 }
 
-/* Home.module.css */
+
 
 .modal {
   position: fixed;
@@ -203,13 +208,13 @@
 }
 
 .confirmarBtn {
-  background-color: #28a745; /* Verde */
+  background-color: #28a745; 
 }
 
 .cancelarBtn {
-  background-color: #dc3545; /* Vermelho do Bootstrap */
+  background-color: #dc3545; 
 }
-/* Home.module.css */
+
 
 .modal {
   position: fixed;
@@ -261,23 +266,23 @@
 }
 
 .confirmarBtn {
-  background-color: #28a745; /* Verde para confirmar */
+  background-color: #28a745;  
   color: white;
 }
 
 .cancelarBtn {
-  background-color: #dc3545; /* Vermelho para cancelar */
+  background-color: #dc3545;  
   color: white;
 }
 
 .errorMsg {
-  color: #dc3545; /* Vermelho do Bootstrap */
+  color: #dc3545;  
   margin: 10px 0;
   font-size: 0.875rem;
 }
 .iconeRedeSocial {
-  font-size: 24px; /* Aumente o tamanho dos ícones */
-  color: #333; /* Cor do ícone */
+  font-size: 24px; /* Tamanho dos ícones */
+  color: #333; 
   margin-right: 8px;
 }
 
@@ -287,6 +292,6 @@
 }
 
 .confirmarBtn {
-  background-color: #28a745; /* Verde para confirmar */
+  background-color: #28a745; 
   color: white;
 }
