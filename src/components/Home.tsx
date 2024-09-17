@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import PartidosContainer from './PartidosContainer';
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from 'react-icons/fa';
 import styles from './Home.module.css';
 import { Candidato } from '../types/types';
+
 
 const Home: React.FC = () => {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
@@ -12,9 +14,12 @@ const Home: React.FC = () => {
   const [filtro, setFiltro] = useState<string>('todos');
   const [expandido, setExpandido] = useState<string | null>(null);
   const [modalAberto, setModalAberto] = useState(false);
+  const [modalContatoAberto, setModalContatoAberto] = useState(false); // Modal de contato
   const [email, setEmail] = useState('');
   const [mensagemErro, setMensagemErro] = useState<string | null>(null);
   const [candidatoParaVoto, setCandidatoParaVoto] = useState<string | null>(null);
+  const [mensagem, setMensagem] = useState(''); // Estado para a mensagem no modal de contato
+  const [candidatoParaContato, setCandidatoParaContato] = useState<string | null>(null); // Estado para o ID do candidato para contato
 
   const fetchCandidatos = async (partido: string) => {
     try {
@@ -70,10 +75,24 @@ const Home: React.FC = () => {
     setCandidatoParaVoto(null);
   };
 
+  const fecharModalContato = () => {
+    setModalContatoAberto(false);
+    setEmail('');
+    setMensagem('');
+    setCandidatoParaContato(null);
+  };
+
   const abrirModal = (id: string) => {
     setCandidatoParaVoto(id);
-    setEmail(''); // Limpa o campo de email ao abrir o modal
+    setEmail('');
     setModalAberto(true);
+  };
+
+  const abrirModalContato = (id: string) => {
+    setCandidatoParaContato(id); // Definir o ID do candidato para contato
+    setEmail('');
+    setMensagem('');
+    setModalContatoAberto(true);
   };
 
   const toggleExpand = (id: string) => {
@@ -105,7 +124,6 @@ const Home: React.FC = () => {
         data: new Date().toISOString()
       });
 
-      console.log(`Voto registrado para o candidato ${candidatoParaVoto}`);
       setModalAberto(false);
       setMensagemErro(null);
     } catch (error) {
@@ -114,6 +132,24 @@ const Home: React.FC = () => {
     }
   };
 
+  const enviarMensagem = async () => {
+    if (!candidatoParaContato || !email || !mensagem) return; // Verificar se o ID do candidato, e-mail e mensagem estão preenchidos
+
+    try {
+      await axios.post('http://localhost:5000/mensagens', {
+        candidatoId: candidatoParaContato, // Usar o ID do candidato para contato
+        email,
+        mensagem,
+        data: new Date().toISOString()
+      });
+
+      console.log('Mensagem enviada com sucesso.');
+      fecharModalContato();
+    } catch (error) {
+      console.error('Erro ao enviar mensagem:', error);
+    }
+  };
+  
   return (
     <div className={styles.homeContainer}>
       <SearchBar onSearch={handleBusca} setBusca={setBusca} />
@@ -155,8 +191,34 @@ const Home: React.FC = () => {
                   >
                     Votar
                   </button>
+                  <button
+                    onClick={() => abrirModalContato(candidato.id)}
+                    className={styles.contatoBtn} // Classe para estilizar o botão azul
+                  >
+                    Entrar em contato
+                  </button>
                   <div className={`${styles.redesSociais} ${expandido === candidato.id ? styles.expanded : ''}`}>
-                    {/* Links das redes sociais */}
+                    {/* Exibir os ícones de redes sociais */}
+                    {candidato.redes_sociais?.facebook && (
+                      <a href={candidato.redes_sociais.facebook} target="_blank" rel="noopener noreferrer">
+                        <FaFacebook className={styles.iconeRedeSocial} />
+                      </a>
+                    )}
+                    {candidato.redes_sociais?.instagram && (
+                      <a href={candidato.redes_sociais.instagram} target="_blank" rel="noopener noreferrer">
+                        <FaInstagram className={styles.iconeRedeSocial} />
+                      </a>
+                    )}
+                    {candidato.redes_sociais?.linkedin && (
+                      <a href={candidato.redes_sociais.linkedin} target="_blank" rel="noopener noreferrer">
+                        <FaLinkedin className={styles.iconeRedeSocial} />
+                      </a>
+                    )}
+                    {candidato.redes_sociais?.youtube && (
+                      <a href={candidato.redes_sociais.youtube} target="_blank" rel="noopener noreferrer">
+                        <FaYoutube className={styles.iconeRedeSocial} />
+                      </a>
+                    )}
                   </div>
                 </>
               )}
@@ -168,24 +230,55 @@ const Home: React.FC = () => {
         )}
       </div>
 
+      {/* Modal de Votação */}
       {modalAberto && (
-      <div className={styles.modal}>
-        <div className={styles.modalContent}>
-          <h2>Confirme seu voto</h2>
-          <p>Digite seu e-mail para confirmar o voto:</p>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Seu e-mail"
-            className={styles.modalInput}
-          />
-          {mensagemErro && <p className={styles.errorMsg}>{mensagemErro}</p>}
-          <button onClick={confirmarVoto} className={styles.confirmarBtn}>Confirmar Voto</button>
-          <button onClick={fecharModal} className={styles.cancelarBtn}>Cancelar</button>
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Confirme seu voto</h2>
+            <p>Insira seu e-mail para confirmar o voto.</p>
+            {mensagemErro && <p className={styles.mensagemErro}>{mensagemErro}</p>}
+            <input
+              type="email"
+              placeholder="Seu e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button onClick={confirmarVoto} className={styles.confirmarBtn}>
+              Confirmar Voto
+            </button>
+            <button onClick={fecharModal} className={styles.cancelarBtn}>
+              Cancelar
+            </button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
+
+      {/* Modal de Contato */}
+      {modalContatoAberto && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Entre em contato</h2>
+            <p>Insira seu e-mail e mensagem para entrar em contato com o candidato.</p>
+            <input
+              type="email"
+              placeholder="Seu e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <textarea
+              placeholder="Sua mensagem"
+              value={mensagem}
+              onChange={(e) => setMensagem(e.target.value)}
+            />
+            <button onClick={enviarMensagem} className={styles.confirmarBtn}>
+              Enviar Mensagem
+            </button>
+            <button onClick={fecharModalContato} className={styles.cancelarBtn}>
+              Cancelar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

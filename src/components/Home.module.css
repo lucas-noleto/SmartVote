@@ -118,7 +118,8 @@
   background-color: #555;
 }
 
-.votarBtn {
+.votarBtn,
+.contatoBtn {
   background-color: #4CAF50; /* Você pode ajustar a cor aqui */
   color: white;
   border: none;
@@ -135,7 +136,9 @@
   background-color: #45a049; /* Efeito hover */
 }
 
-
+.contatoBtn{
+  background-color: #0275d8;
+}
 
 /* Escondido inicialmente */
 .votarBtn.hidden {
@@ -271,4 +274,19 @@
   color: #dc3545; /* Vermelho do Bootstrap */
   margin: 10px 0;
   font-size: 0.875rem;
+}
+.iconeRedeSocial {
+  font-size: 24px; /* Aumente o tamanho dos ícones */
+  color: #333; /* Cor do ícone */
+  margin-right: 8px;
+}
+
+.redesSociais a {
+  display: inline-block;
+  margin: 0 8px;
+}
+
+.confirmarBtn {
+  background-color: #28a745; /* Verde para confirmar */
+  color: white;
 }

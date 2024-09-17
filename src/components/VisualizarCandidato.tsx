@@ -5,13 +5,20 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaEnvelope } from 'reac
 
 const VisualizarCandidato: React.FC = () => {
   const [candidato, setCandidato] = useState<any>(null);
+  const [mensagens, setMensagens] = useState<any[]>([]); // Novo estado para armazenar mensagens
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Buscar dados do candidato
     axios.get(`http://localhost:5000/candidatos/${id}`)
       .then(response => setCandidato(response.data))
       .catch(error => console.error('Erro ao buscar candidato:', error));
+
+    // Buscar mensagens atreladas ao candidato
+    axios.get(`http://localhost:5000/mensagens?candidatoId=${id}`)
+      .then(response => setMensagens(response.data))
+      .catch(error => console.error('Erro ao buscar mensagens:', error));
   }, [id]);
 
   if (!candidato) return <div>Carregando...</div>;
@@ -74,6 +81,24 @@ const VisualizarCandidato: React.FC = () => {
 
         <button type="button" className="btn btn-secondary" onClick={() => navigate(`/master/edit/${id}`)}>Editar</button>
       </form>
+
+      {/* Visualizar Mensagens */}
+      <div className="mt-5">
+        <h3>Mensagens Recebidas</h3>
+        {mensagens.length > 0 ? (
+          <ul className="list-group">
+            {mensagens.map((mensagem) => (
+              <li key={mensagem.id} className="list-group-item">
+                <strong>Email:</strong> {mensagem.email}<br />
+                <strong>Mensagem:</strong> {mensagem.mensagem}<br />
+                <strong>Data:</strong> {new Date(mensagem.data).toLocaleString()}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Nenhuma mensagem encontrada para este candidato.</p>
+        )}
+      </div>
     </div>
   );
 };

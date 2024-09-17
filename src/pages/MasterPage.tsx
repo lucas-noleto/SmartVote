@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Candidato}  from '../types/types';
 import Botao from '../components/BotaoCRUD';

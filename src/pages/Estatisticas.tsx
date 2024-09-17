@@ -85,10 +85,14 @@ const Estatisticas: React.FC = () => {
 
   const renderLegend = (props: any) => {
     const { payload } = props;
+
+    // Debug: exibir o payload no console para inspecionar
+    console.log("Payload:", payload);
+
     return (
       <div className={styles.legendContainer}>
         {payload.map((entry: any, index: number) => {
-          const candidato = candidatos.find(c => c.id === entry.value);
+          const candidato = candidatos.find(c => c.id === entry.payload.name); // Usar 'name' ao invés de 'value'
           return candidato ? (
             <div key={`legend-item-${index}`} className={styles.legendItem}>
               <img src={candidato.foto} alt={candidato.nome} className={styles.candidatoFoto} />
