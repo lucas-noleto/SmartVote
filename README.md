@@ -4,12 +4,12 @@
 Trabalho que fiz para conclusão do módulo de frontend
 
 ## Tecnologias utilizadas
--React
--Bootstrap
--Json-server
--React Icons
--ReCharts
--Typescript
+  - React
+  - Bootstrap
+  - Json-server
+  - React Icons
+  - ReCharts
+  -T ypescript
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
