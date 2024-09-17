@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Candidato } from './types/types';
 import Estatisticas from './pages/Estatisticas';
+import Footer from './components/Footer';
 
 const App = () => {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/master/edit/:id" element={<EditarCandidato />} />
         <Route path="/master/view/:id" element={<VisualizarCandidato />} />
       </Routes>
+      <Footer />
     </Router>
   );
 };

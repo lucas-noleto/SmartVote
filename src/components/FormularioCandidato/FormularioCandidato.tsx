@@ -119,10 +119,11 @@ const FormularioCandidato: React.FC = () => {
           <div className="mb-3">
             <label htmlFor="cargo" className="form-label">Cargo</label>
             <select className="form-select" id="cargo" value={cargo} onChange={e => setCargo(e.target.value)}>
-              <option value="prefeito">Prefeito</option>
-              <option value="vereador">Vereador</option>
-              <option value="senador">Senador</option>
-              <option value="presidente">Presidente</option>
+              <option value="Prefeito">Prefeito</option>
+              <option value="Vereador">Vereador</option>
+              <option value="Senador">Senador</option>
+              <option value="Presidente">Presidente</option>
+              <option value="Governador">Governador</option>
             </select>
           </div>
 

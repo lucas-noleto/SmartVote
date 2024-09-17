@@ -36,11 +36,19 @@
     padding-left: 20px; /* Ajusta a distância do nome à esquerda */
     
   }
+
+  .brand h1:hover{
+    color: #2980b9;
+  }
   
   .nav_links {
     list-style: none;
     display: flex;
     align-items: center;
+  }
+
+  .nav_links a:hover{
+    color: #2980b9;
   }
   
   .nav_links li {

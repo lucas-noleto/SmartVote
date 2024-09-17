@@ -102,7 +102,7 @@ const EditarCandidato: React.FC = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Editar Candidato</h2>
+      <h2 className="mb-4 p-5">Editar Candidato</h2>
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
         {/* Nome */}
         <div className="mb-3">

@@ -24,7 +24,7 @@ const VisualizarCandidato: React.FC = () => {
   if (!candidato) return <div>Carregando...</div>;
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 p-5">
       <h2 className="mb-4">Visualizar Candidato</h2>
       <form>
         {/* Nome */}
