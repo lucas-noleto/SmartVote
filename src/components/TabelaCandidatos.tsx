@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Candidato } from '../types/types';
-import Botao from './BotaoCRUD';
+import Botao from './Botões/BotaoCRUD';
 import styles from './TabelaCandidatos.module.css';
 
 interface TabelaCandidatosProps {

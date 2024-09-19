@@ -90,7 +90,7 @@ const FormularioCandidato: React.FC = () => {
     <div className={`container ${styles.container_form}`}>
       <div className={styles.form_wrapper}>
         <h2 className={styles.form_title}>Cadastrar Novo Candidato</h2>
-        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+        <form className='mb-5' onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
           <FormField
             id="nome"
             label="Nome"

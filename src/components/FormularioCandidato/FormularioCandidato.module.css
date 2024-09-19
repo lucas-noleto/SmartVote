@@ -5,6 +5,7 @@
     align-items: flex-start; /* Ajusta o alinhamento vertical */
     margin-top: 125px; /* Ajusta a distância da barra em relação à navbar */
     width: 100%; /* Garante que o container ocupe toda a largura */
+    
   }
   
   .form_wrapper {

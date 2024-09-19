@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Candidato}  from '../types/types';
-import Botao from '../components/BotaoCRUD';
+import Botao from '../components/Botões/BotaoCRUD';
 import TabelaCandidatos from '../components/TabelaCandidatos';
 import { useNavigate } from 'react-router-dom'; // Para navegação
 

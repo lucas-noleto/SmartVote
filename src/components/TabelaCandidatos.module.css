@@ -7,6 +7,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 75px; /* Ajusta a distância da barra em relação à navbar */
+  margin-bottom: 5px;
 }
 
 .container_table {

@@ -6,7 +6,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import styles from './Home.module.css';
 import { Candidato } from '../types/types';
 import Modal from './Modal/Modal'
-import ContatoModal from './Modal/ModalContato'; // Importar o modal componentizado
+import ContatoModal from './Modal/ModalContato'; 
 
 
 const Home: React.FC = () => {
@@ -132,19 +132,17 @@ const Home: React.FC = () => {
     }
   };
 
-  const enviarMensagem = async () => {
-    if (!candidatoParaContato || !email || !mensagem) return;
+  const enviarMensagem = async (email: string, mensagem: string) => {
+    if (!candidatoParaContato) return;
 
     try {
       await axios.post('http://localhost:5000/mensagens', {
         candidatoId: candidatoParaContato,
         email,
         mensagem,
-        data: new Date().toISOString()
+        data: new Date().toISOString(),
       });
-
-      console.log('Mensagem enviada com sucesso.');
-      fecharModalContato();
+      fecharModalContato(); // Fecha o modal após enviar a mensagem
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error);
     }
@@ -248,11 +246,6 @@ const Home: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </Modal>
-
-      {/* Modal de Contato usando o componente Modal */}
-      import ContatoModal from './ContatoModal'; // Importar o modal componentizado
-
-// No seu componente principal:
       <ContatoModal
         isOpen={modalContatoAberto}
         onClose={fecharModalContato}
