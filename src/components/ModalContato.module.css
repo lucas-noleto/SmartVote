@@ -1,0 +1,20 @@
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espaçamento entre os campos */
+  }
+  
+  .inputField,
+  .textareaField {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .textareaField {
+    min-height: 100px; /* Para o campo de mensagem ser maior */
+  }
+  
+  

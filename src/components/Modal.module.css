@@ -1,0 +1,72 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.confirmarBtn, .cancelarBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirmarBtn {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.cancelarBtn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.errorMessage {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.modal-contact-form {
+  display: flex;
+  flex-direction: column; /* Coloca os inputs um embaixo do outro */
+  gap: 20px; /* Adiciona espaçamento entre os inputs */
+  padding: 20px; /* Adiciona espaçamento interno no formulário */
+}
+
+.modal-contact-form input,
+.modal-contact-form textarea {
+  width: 100%; /* Faz os campos ocuparem toda a largura disponível */
+  padding: 10px; /* Adiciona espaçamento dentro dos campos */
+  border: 1px solid #ccc; /* Define uma borda leve */
+  border-radius: 4px; /* Deixa as bordas dos inputs arredondadas */
+}
+
+.modal-contact-form button {
+  padding: 10px 15px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

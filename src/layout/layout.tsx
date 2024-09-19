@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import SearchBar from '../components/SearchBar';
 import PartidosContainer from '../components/PartidosContainer';
-import Footer from '../components/Footer';
+
 
 interface LayoutProps {
   children: React.ReactNode;

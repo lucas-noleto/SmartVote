@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import PartidosContainer from './PartidosContainer';
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import styles from './Home.module.css';
 import { Candidato } from '../types/types';
+import Modal from './Modal'
+import ContatoModal from './ModalContato'; // Importar o modal componentizado
 
 
 const Home: React.FC = () => {
@@ -67,7 +69,6 @@ const Home: React.FC = () => {
   const handleBusca = () => {
     setBusca(busca);
   };
-
   const fecharModal = () => {
     setModalAberto(false);
     setMensagemErro(null);
@@ -89,7 +90,7 @@ const Home: React.FC = () => {
   };
 
   const abrirModalContato = (id: string) => {
-    setCandidatoParaContato(id); // Definir o ID do candidato para contato
+    setCandidatoParaContato(id); 
     setEmail('');
     setMensagem('');
     setModalContatoAberto(true);
@@ -124,8 +125,7 @@ const Home: React.FC = () => {
         data: new Date().toISOString()
       });
 
-      setModalAberto(false);
-      setMensagemErro(null);
+      fecharModal();
     } catch (error) {
       console.error('Erro ao registrar voto:', error);
       setMensagemErro('Erro ao registrar voto. Por favor, tente novamente.');
@@ -133,11 +133,11 @@ const Home: React.FC = () => {
   };
 
   const enviarMensagem = async () => {
-    if (!candidatoParaContato || !email || !mensagem) return; // Verificar se o ID do candidato, e-mail e mensagem estão preenchidos
+    if (!candidatoParaContato || !email || !mensagem) return;
 
     try {
       await axios.post('http://localhost:5000/mensagens', {
-        candidatoId: candidatoParaContato, // Usar o ID do candidato para contato
+        candidatoId: candidatoParaContato,
         email,
         mensagem,
         data: new Date().toISOString()
@@ -230,55 +230,35 @@ const Home: React.FC = () => {
         )}
       </div>
 
-      {/* Modal de Votação */}
-      {modalAberto && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h2>Confirme seu voto</h2>
-            <p>Insira seu e-mail para confirmar o voto.</p>
-            {mensagemErro && <p className={styles.mensagemErro}>{mensagemErro}</p>}
-            <input
-              type="email"
-              placeholder="Seu e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <button onClick={confirmarVoto} className={styles.confirmarBtn}>
-              Confirmar Voto
-            </button>
-            <button onClick={fecharModal} className={styles.cancelarBtn}>
-              Cancelar
-            </button>
-          </div>
-        </div>
-      )}
+     {/* Modal de Votação usando o componente Modal */}
+     <Modal
+        title="Confirme seu voto"
+        isOpen={modalAberto}
+        onClose={fecharModal}
+        onConfirm={confirmarVoto}
+        confirmLabel="Confirmar Voto"
+        errorMessage={mensagemErro}
+        confirmDisabled={!email} // Desabilitar botão se o email estiver vazio
+      >
+        <p>Insira seu e-mail para confirmar o voto.</p>
+        <input
+          type="email"
+          placeholder="Seu e-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </Modal>
 
-      {/* Modal de Contato */}
-      {modalContatoAberto && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h2>Entre em contato</h2>
-            <p>Insira seu e-mail e mensagem para entrar em contato com o candidato.</p>
-            <input
-              type="email"
-              placeholder="Seu e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <textarea
-              placeholder="Sua mensagem"
-              value={mensagem}
-              onChange={(e) => setMensagem(e.target.value)}
-            />
-            <button onClick={enviarMensagem} className={styles.confirmarBtn}>
-              Enviar Mensagem
-            </button>
-            <button onClick={fecharModalContato} className={styles.cancelarBtn}>
-              Cancelar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Modal de Contato usando o componente Modal */}
+      import ContatoModal from './ContatoModal'; // Importar o modal componentizado
+
+// No seu componente principal:
+      <ContatoModal
+        isOpen={modalContatoAberto}
+        onClose={fecharModalContato}
+        onConfirm={enviarMensagem}
+      />
+
     </div>
   );
 };
