@@ -5,8 +5,8 @@ import PartidosContainer from './PartidosContainer';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import styles from './Home.module.css';
 import { Candidato } from '../types/types';
-import Modal from './Modal'
-import ContatoModal from './ModalContato'; // Importar o modal componentizado
+import Modal from './Modal/Modal'
+import ContatoModal from './Modal/ModalContato'; // Importar o modal componentizado
 
 
 const Home: React.FC = () => {
