@@ -16,12 +16,12 @@ const Home: React.FC = () => {
   const [filtro, setFiltro] = useState<string>('todos');
   const [expandido, setExpandido] = useState<string | null>(null);
   const [modalAberto, setModalAberto] = useState(false);
-  const [modalContatoAberto, setModalContatoAberto] = useState(false); // Modal de contato
+  const [modalContatoAberto, setModalContatoAberto] = useState(false); 
   const [email, setEmail] = useState('');
   const [mensagemErro, setMensagemErro] = useState<string | null>(null);
   const [candidatoParaVoto, setCandidatoParaVoto] = useState<string | null>(null);
-  const [mensagem, setMensagem] = useState(''); // Estado para a mensagem no modal de contato
-  const [candidatoParaContato, setCandidatoParaContato] = useState<string | null>(null); // Estado para o ID do candidato para contato
+  const [mensagem, setMensagem] = useState(''); 
+  const [candidatoParaContato, setCandidatoParaContato] = useState<string | null>(null); 
 
   const fetchCandidatos = async (partido: string) => {
     try {
@@ -142,7 +142,7 @@ const Home: React.FC = () => {
         mensagem,
         data: new Date().toISOString(),
       });
-      fecharModalContato(); // Fecha o modal após enviar a mensagem
+      fecharModalContato(); 
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error);
     }
@@ -191,12 +191,12 @@ const Home: React.FC = () => {
                   </button>
                   <button
                     onClick={() => abrirModalContato(candidato.id)}
-                    className={styles.contatoBtn} // Classe para estilizar o botão azul
+                    className={styles.contatoBtn} 
                   >
                     Entrar em contato
                   </button>
                   <div className={`${styles.redesSociais} ${expandido === candidato.id ? styles.expanded : ''}`}>
-                    {/* Exibir os ícones de redes sociais */}
+                    {/* Icones de redes sociais */}
                     {candidato.redes_sociais?.facebook && (
                       <a href={candidato.redes_sociais.facebook} target="_blank" rel="noopener noreferrer">
                         <FaFacebook className={styles.iconeRedeSocial} />
@@ -228,7 +228,7 @@ const Home: React.FC = () => {
         )}
       </div>
 
-     {/* Modal de Votação usando o componente Modal */}
+     {/* Componente Modal de votação*/}
      <Modal
         title="Confirme seu voto"
         isOpen={modalAberto}
@@ -236,7 +236,7 @@ const Home: React.FC = () => {
         onConfirm={confirmarVoto}
         confirmLabel="Confirmar Voto"
         errorMessage={mensagemErro}
-        confirmDisabled={!email} // Desabilitar botão se o email estiver vazio
+        confirmDisabled={!email} 
       >
         <p>Insira seu e-mail para confirmar o voto.</p>
         <input
