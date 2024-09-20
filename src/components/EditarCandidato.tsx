@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
-import EditarPropostaModal from './EditarPropostaModal'; // Importando o modal
+import EditarPropostaModal from './EditarPropostaModal';  
+import apiUrl from '../../axios/config'; 
 
 const EditarCandidato: React.FC = () => {
   const [candidato, setCandidato] = useState<any>(null);
@@ -25,11 +26,11 @@ const EditarCandidato: React.FC = () => {
   const [youtube, setYoutube] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/partidos')
+    axios.get(`${apiUrl}/partidos`)
       .then(response => setPartidos(response.data))
       .catch(error => console.error('Erro ao buscar partidos:', error));
 
-    axios.get(`http://localhost:5000/candidatos/${id}`)
+    axios.get(`${apiUrl}/candidatos/${id}`)
       .then(response => {
         const candidatoData = response.data;
         setCandidato(candidatoData);
@@ -47,6 +48,7 @@ const EditarCandidato: React.FC = () => {
       })
       .catch(error => console.error('Erro ao buscar candidato:', error));
   }, [id]);
+
 
   const handleAddProposta = () => {
     if (novaProposta.trim() !== '') {
@@ -82,7 +84,7 @@ const EditarCandidato: React.FC = () => {
       numero
     };
 
-    axios.put(`http://localhost:5000/candidatos/${id}`, candidatoAtualizado)
+    axios.put(`${apiUrl}/candidatos/${id}`, candidatoAtualizado)
       .then(() => navigate('/master'))
       .catch(error => console.error('Erro ao atualizar candidato:', error));
   };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaEnvelope } from 'react-icons/fa';
+import apiUrl from '../../axios/config';  
 
 const FormularioCandidato: React.FC = () => {
   const [nome, setNome] = useState('');
@@ -21,7 +21,7 @@ const FormularioCandidato: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/partidos')
+    apiUrl.get('/partidos')
       .then(response => setPartidos(response.data))
       .catch(error => console.error('Erro ao buscar partidos:', error));
   }, []);
@@ -54,7 +54,7 @@ const FormularioCandidato: React.FC = () => {
       numero
     };
 
-    axios.post('http://localhost:5000/candidatos', novoCandidato)
+    apiUrl.post('/candidatos', novoCandidato)
       .then(() => navigate('/master'))
       .catch(error => console.error(error));
   };

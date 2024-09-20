@@ -8,6 +8,8 @@ import { Candidato } from '../types/types';
 import Modal from './Modal/Modal'
 import ContatoModal from './Modal/ModalContato'; 
 
+import apiUrl from '../../axios/config'; 
+
 
 const Home: React.FC = () => {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
@@ -22,20 +24,20 @@ const Home: React.FC = () => {
   const [candidatoParaVoto, setCandidatoParaVoto] = useState<string | null>(null);
   const [mensagem, setMensagem] = useState(''); 
   const [candidatoParaContato, setCandidatoParaContato] = useState<string | null>(null); 
+  
 
   const fetchCandidatos = async (partido: string) => {
     try {
-      let url = 'http://localhost:5000/candidatos';
+      let url = '/candidatos';
       if (partido !== 'todos') {
         url += `?partido=${partido}`;
       }
-      const response = await axios.get(url);
+      const response = await apiUrl.get(url);
       setCandidatos(response.data);
     } catch (error) {
       console.error('Erro ao buscar candidatos:', error);
     }
   };
-
   useEffect(() => {
     fetchCandidatos(filtro);
   }, [filtro]);
@@ -108,21 +110,21 @@ const Home: React.FC = () => {
     if (!candidatoParaVoto || !email) return;
 
     try {
-      const candidato = candidatos.find(c => c.id === candidatoParaVoto);
+      const candidato = candidatos.find((c) => c.id === candidatoParaVoto);
       if (!candidato) return;
 
-      const { data } = await axios.get(`http://localhost:5000/intencao_votos?email=${email}&cargo=${candidato.cargo}`);
+      const { data } = await apiUrl.get(`/intencao_votos?email=${email}&cargo=${candidato.cargo}`);
 
       if (data.length > 0) {
         setMensagemErro(`Você já votou para o cargo de ${candidato.cargo}.`);
         return;
       }
 
-      await axios.post('http://localhost:5000/intencao_votos', {
+      await apiUrl.post('/intencao_votos', {
         candidatoId: candidatoParaVoto,
         email,
         cargo: candidato.cargo || 'Não informado',
-        data: new Date().toISOString()
+        data: new Date().toISOString(),
       });
 
       fecharModal();
@@ -132,17 +134,18 @@ const Home: React.FC = () => {
     }
   };
 
+  
   const enviarMensagem = async (email: string, mensagem: string) => {
     if (!candidatoParaContato) return;
 
     try {
-      await axios.post('http://localhost:5000/mensagens', {
+      await apiUrl.post('/mensagens', {
         candidatoId: candidatoParaContato,
         email,
         mensagem,
         data: new Date().toISOString(),
       });
-      fecharModalContato(); 
+      fecharModalContato();
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error);
     }
