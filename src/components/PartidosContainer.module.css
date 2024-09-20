@@ -3,13 +3,13 @@
   flex-wrap: wrap;
   margin-top: 10px;
   justify-content: flex-start;
-  padding-left: 10.4%; /* Ajusta a posição horizontal */
+  padding-left: 10.4%; 
 }
 
 .todosPartidosBtn {
   padding: 10px 20px;
   margin: 5px;
-  /* background-color: #4CAF50; */
+  
   background-color: #333;
   color: white;
   border: none;
@@ -21,7 +21,7 @@
 }
 
 .partidosBotoes {
-  /* background-color: #4CAF50; */
+  
   background-color: #333;
   color: white;
   border: none;
@@ -34,7 +34,7 @@
 }
 
 .todosPartidosBtn:hover {
-  /* background-color: #45a049; */
+  
   background-color: #555;
 }
 

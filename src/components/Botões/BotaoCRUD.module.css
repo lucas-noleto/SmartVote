@@ -10,7 +10,7 @@
   color: white;
 }
 
-/* Botão verde */
+
 .btnSuccess {
   background-color: #333;
 }
@@ -19,13 +19,13 @@
   background-color: #555;
 }
 
-/* Botão azul */
+
 .btnPrimary {
   background-color: #0275d8; /* Azul */
 }
 
 .btnPrimary:hover {
-  background-color: #025aa5; /* Hover mais escuro */
+  background-color: #025aa5; 
 }
 
 /* Botão amarelo */

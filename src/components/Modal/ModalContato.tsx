@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Modal from './Modal'; // Seu componente Modal
-import styles from './ModalContato.module.css'; // Estilos específicos do modal de contato
+import Modal from './Modal'; 
+import styles from './ModalContato.module.css'; 
 
 const ContatoModal: React.FC<{
   isOpen: boolean;
@@ -10,7 +10,7 @@ const ContatoModal: React.FC<{
   const [email, setEmail] = useState('');
   const [mensagem, setMensagem] = useState('');
 
-  // Limpa os campos quando o modal for fechado
+  
   useEffect(() => {
     if (!isOpen) {
       setEmail('');
@@ -20,7 +20,7 @@ const ContatoModal: React.FC<{
 
   const handleConfirm = () => {
     if (email && mensagem) {
-      onConfirm(email, mensagem); // Passa os dados para a função onConfirm
+      onConfirm(email, mensagem); 
     }
   };
 
@@ -31,7 +31,7 @@ const ContatoModal: React.FC<{
       onClose={onClose}
       onConfirm={handleConfirm}
       confirmLabel="Enviar Mensagem"
-      confirmDisabled={!email || !mensagem} // Desabilita o botão se os campos estiverem vazios
+      confirmDisabled={!email || !mensagem}
     >
       <div className={styles.formGroup}>
         <input

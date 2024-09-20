@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { Candidato } from '../types/types';
 import Botao from './Botões/BotaoCRUD';
 import styles from './TabelaCandidatos.module.css';
+import apiUrl from '../../axios/config';
 
 interface TabelaCandidatosProps {
   candidatos: Candidato[];
@@ -17,7 +17,7 @@ const TabelaCandidatos: React.FC<TabelaCandidatosProps> = ({ candidatos }) => {
     // Função para buscar candidatos do servidor
     const fetchCandidatos = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/candidatos');
+        const response = await apiUrl.get('/candidatos');
         setLocalCandidatos(response.data);
       } catch (error) {
         console.error('Erro ao buscar candidatos:', error);
@@ -39,7 +39,7 @@ const TabelaCandidatos: React.FC<TabelaCandidatosProps> = ({ candidatos }) => {
 
   const handleDelete = (id: string) => {
     if (window.confirm("Tem certeza que deseja excluir este candidato?")) {
-      axios.delete(`http://localhost:5000/candidatos/${id}`)
+      apiUrl.delete(`/candidatos/${id}`)
         .then(() => {
           // Atualiza a lista local após exclusão
           setLocalCandidatos(prev => prev.filter(candidato => candidato.id !== id));

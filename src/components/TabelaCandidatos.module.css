@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 75px; /* Ajusta a distância da barra em relação à navbar */
+  margin-top: 75px; 
   margin-bottom: 5px;
 }
 
@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 0; /* Ajusta a distância da barra em relação à navbar */
+  margin-top: 0; 
   padding-top: 0;
 }
 
@@ -73,10 +73,10 @@
   background-color: #45a049;
 }
 
-/* Estilo adicional para alinhamento */
+
 .createButtonContainer {
   display: flex;
-  justify-content: flex-end; /* Alinha à direita, acima da tabela */
+  justify-content: flex-end; 
   margin-bottom: 0;
   margin-right: 16%;
   margin-top: 0;

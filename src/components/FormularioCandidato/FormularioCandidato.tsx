@@ -6,6 +6,7 @@ import PropostaList from './PropostaList';
 import FormField from './FormField';
 import CustomButton from './CustomButton';
 import styles from './FormularioCandidato.module.css';
+import apiUrl from '../../../axios/config';
 
 const FormularioCandidato: React.FC = () => {
   const [nome, setNome] = useState('');
@@ -27,7 +28,7 @@ const FormularioCandidato: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/partidos')
+    apiUrl.get('/partidos')
       .then(response => setPartidos(response.data))
       .catch(error => console.error('Erro ao buscar partidos:', error));
   }, []);
@@ -65,7 +66,7 @@ const FormularioCandidato: React.FC = () => {
     };
 
     try {
-      await axios.post('http://localhost:5000/candidatos', novoCandidato);
+      await apiUrl.post('/candidatos', novoCandidato);
       navigate('/master');
     } catch (error) {
       console.error('Erro ao cadastrar candidato:', error);

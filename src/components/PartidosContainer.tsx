@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import styles from './PartidosContainer.module.css';
+import apiUrl from '../../axios/config';
 
 interface Partido {
   sigla: string;
@@ -17,7 +17,7 @@ const PartidosContainer: React.FC<PartidosContainerProps> = ({ onFiltro }) => {
   useEffect(() => {
     const fetchPartidos = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/partidos');
+        const response = await apiUrl.get('/partidos');
         setPartidos(response.data);
       } catch (error) {
         console.error('Erro ao buscar partidos:', error);

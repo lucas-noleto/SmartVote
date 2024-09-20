@@ -1,4 +1,4 @@
-// src/components/FormularioCandidato/PropostaList.tsx
+
 import React from 'react';
 
 interface PropostaListProps {

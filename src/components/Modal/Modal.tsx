@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Modal.module.css'; // Estilos específicos do modal
+import styles from './Modal.module.css'; 
 
 type ModalProps = {
   title: string;
@@ -8,8 +8,8 @@ type ModalProps = {
   onConfirm: () => void;
   confirmLabel: string;
   children: React.ReactNode;
-  errorMessage?: string | null; // Opcional, para exibir mensagens de erro
-  confirmDisabled?: boolean; // Opcional, para desabilitar o botão de confirmar
+  errorMessage?: string | null; 
+  confirmDisabled?: boolean; 
 };
 
 const Modal: React.FC<ModalProps> = ({

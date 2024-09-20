@@ -49,17 +49,17 @@
 
 .modal-contact-form {
   display: flex;
-  flex-direction: column; /* Coloca os inputs um embaixo do outro */
-  gap: 20px; /* Adiciona espaçamento entre os inputs */
-  padding: 20px; /* Adiciona espaçamento interno no formulário */
+  flex-direction: column; 
+  gap: 20px; 
+  padding: 20px; 
 }
 
 .modal-contact-form input,
 .modal-contact-form textarea {
-  width: 100%; /* Faz os campos ocuparem toda a largura disponível */
-  padding: 10px; /* Adiciona espaçamento dentro dos campos */
-  border: 1px solid #ccc; /* Define uma borda leve */
-  border-radius: 4px; /* Deixa as bordas dos inputs arredondadas */
+  width: 100%; 
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
 }
 
 .modal-contact-form button {

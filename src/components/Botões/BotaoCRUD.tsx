@@ -15,7 +15,7 @@ const Botao: React.FC<BotaoProps> = ({ onClick, texto, tipo = 'criar' }) => {
       case 'excluir':
         return `${styles.buttonBase} ${styles.btnDanger}`;
       case 'visualizar':
-        return `${styles.buttonBase} ${styles.btnPrimary}`; // Classe correta para "Primary"
+        return `${styles.buttonBase} ${styles.btnPrimary}`; 
       case 'criar':
       default:
         return `${styles.buttonBase} ${styles.btnSuccess}`;

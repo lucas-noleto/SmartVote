@@ -1,4 +1,4 @@
-// src/components/FormularioCandidato/SocialMediaField.tsx
+
 import React from 'react';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaEnvelope } from 'react-icons/fa';
 

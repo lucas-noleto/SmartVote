@@ -1,4 +1,4 @@
-// src/components/FormularioCandidato/CustomButton.tsx
+
 import React from 'react';
 
 interface CustomButtonProps {

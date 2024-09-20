@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaEnvelope } from 'react-icons/fa';
+import apiUrl from '../../axios/config';
 
 const VisualizarCandidato: React.FC = () => {
   const [candidato, setCandidato] = useState<any>(null);
@@ -11,12 +11,12 @@ const VisualizarCandidato: React.FC = () => {
 
   useEffect(() => {
     // Buscar dados do candidato
-    axios.get(`http://localhost:5000/candidatos/${id}`)
+    apiUrl.get(`/candidatos/${id}`)
       .then(response => setCandidato(response.data))
       .catch(error => console.error('Erro ao buscar candidato:', error));
 
     // Buscar mensagens atreladas ao candidato
-    axios.get(`http://localhost:5000/mensagens?candidatoId=${id}`)
+    apiUrl.get(`/mensagens?candidatoId=${id}`)
       .then(response => setMensagens(response.data))
       .catch(error => console.error('Erro ao buscar mensagens:', error));
   }, [id]);

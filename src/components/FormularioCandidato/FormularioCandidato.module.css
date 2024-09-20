@@ -1,33 +1,33 @@
-/* src/components/FormularioCandidato/FormularioCandidato.module.css */
+
 .container_form {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Ajusta o alinhamento vertical */
-    margin-top: 125px; /* Ajusta a distância da barra em relação à navbar */
-    width: 100%; /* Garante que o container ocupe toda a largura */
+    align-items: flex-start; 
+    margin-top: 125px; 
+    width: 100%; 
     
   }
   
   .form_wrapper {
-    width: 100%; /* Ajusta a largura do formulário para ocupar 60% da tela */
-    max-width: 1500px; /* Adiciona um limite máximo de largura */
+    width: 100%; 
+    max-width: 1500px; 
   }
   
   .form_title {
     text-align: center;
-    margin-bottom: 2rem; /* Espaçamento abaixo do título */
+    margin-bottom: 2rem; 
   }
   
   .form-control, .form-select {
-    width: 100%; /* Garantir que o input e select ocupem toda a largura disponível dentro do form_wrapper */
+    width: 100%; 
   }
   
   .input-group {
-    width: 100%; /* Garantir que o grupo de input ocupe toda a largura disponível */
+    width: 100%; 
   }
   
   .input-group-text {
-    width: 40px; /* Ajustar o tamanho do ícone */
+    width: 40px; 
     height: 40px;
     display: flex;
     align-items: center;
@@ -35,11 +35,11 @@
   }
   
   img {
-    max-width: 200px; /* Garantir que a imagem não ultrapasse 200px de largura */
+    max-width: 200px; 
   }
   
   .btn-custom {
-    background-color: #007bff; /* Cor do botão customizada */
+    background-color: #007bff; 
     border-color: #007bff;
   }
   
