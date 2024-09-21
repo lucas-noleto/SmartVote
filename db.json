@@ -28,7 +28,9 @@
       "partido": "PSDB",
       "cargo": "Presidente",
       "propostas": [
-        "Melhorar a educação"
+        "Melhorar a educação",
+        "Igrejas nas escolas",
+        "Melhorar hospitais publicos"
       ],
       "redes_sociais": {
         "facebook": "https://www.youtube.com/watch?v=kr7KxmoDIh0&pp=ygURcGFkcmUga2VsbW9uIG1lbWU%3D",
@@ -171,6 +173,13 @@
       "email": "1@gmas.com",
       "mensagem": "Olr",
       "data": "2024-09-20T00:57:54.672Z"
+    },
+    {
+      "id": "adb1",
+      "candidatoId": "1",
+      "email": "h@aihdjas.com",
+      "mensagem": "oi",
+      "data": "2024-09-21T13:05:51.881Z"
     }
   ],
   "intencao_votos": [
@@ -306,6 +315,13 @@
       "email": "101@c.com",
       "cargo": "Presidente",
       "data": "2024-09-20T00:57:42.107Z"
+    },
+    {
+      "id": "5152",
+      "candidatoId": "1",
+      "email": "h@gmail.com",
+      "cargo": "Presidente",
+      "data": "2024-09-21T13:05:32.176Z"
     }
   ]
 }

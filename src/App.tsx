@@ -10,12 +10,13 @@ import axios from 'axios';
 import { Candidato } from './types/types';
 import Estatisticas from './pages/Estatisticas';
 import Footer from './components/Footer';
+import apiUrl from '../axios/config'
 
 const App = () => {
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/candidatos')
+    apiUrl.get('/candidatos')
       .then(response => setCandidatos(response.data))
       .catch(error => console.error('Erro ao buscar candidatos:', error));
   }, []);

@@ -24,6 +24,7 @@ const FormularioCandidato: React.FC = () => {
   const [email, setEmail] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const navigate = useNavigate();
 
@@ -33,9 +34,19 @@ const FormularioCandidato: React.FC = () => {
       .catch(error => console.error('Erro ao buscar partidos:', error));
   }, []);
 
-  const handleAddProposta = () => {
-    setPropostas([...propostas, novaProposta]);
-    setNovaProposta('');
+  const validateForm = () => {
+    let formErrors: { [key: string]: string } = {};
+
+    if (!nome.trim()) formErrors.nome = 'Nome não pode ficar em branco';
+    if (!partido) formErrors.partido = 'Selecione um partido';
+    if (!cargo) formErrors.cargo = 'Cargo não pode ficar em branco';
+    if (!numero.trim()) formErrors.numero = 'Número do candidato é obrigatório';
+    if (!email.trim()) formErrors.email = 'Email de contato é obrigatório';
+    if (!foto) formErrors.foto = 'Uma foto do candidato é necessária';
+
+    setErrors(formErrors);
+
+    return Object.keys(formErrors).length === 0;
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,10 +60,21 @@ const FormularioCandidato: React.FC = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (isSubmitting) return; // Previne múltiplas submissões
+  const handleAddProposta = () => {
+    if (novaProposta.trim() !== '') {
+      setPropostas([...propostas, novaProposta]);
+      setNovaProposta('');
+    }
+  };
 
-    setIsSubmitting(true); // Define o estado de envio
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
 
     const novoCandidato = {
       nome,
@@ -71,7 +93,7 @@ const FormularioCandidato: React.FC = () => {
     } catch (error) {
       console.error('Erro ao cadastrar candidato:', error);
     } finally {
-      setIsSubmitting(false); // Restaura o estado de envio
+      setIsSubmitting(false);
     }
   };
 
@@ -100,10 +122,12 @@ const FormularioCandidato: React.FC = () => {
             placeholder="Nome"
             onChange={(e) => setNome(e.target.value)}
           />
+          {errors.nome && <div className={styles.error_message}>{errors.nome}</div>}
 
           <div className="mb-3">
             <label htmlFor="foto" className="form-label">Foto</label>
             <input type="file" className="form-control" id="foto" accept="image/*" onChange={handleImageUpload} />
+            {errors.foto && <div className={styles.error_message}>{errors.foto}</div>}
             {foto && <img src={foto as string} alt="Foto do Candidato" className="mt-3" />}
           </div>
 
@@ -115,6 +139,7 @@ const FormularioCandidato: React.FC = () => {
                 <option key={partido.sigla} value={partido.sigla}>{partido.sigla}</option>
               ))}
             </select>
+            {errors.partido && <div className={styles.error_message}>{errors.partido}</div>}
           </div>
 
           <div className="mb-3">
@@ -126,6 +151,7 @@ const FormularioCandidato: React.FC = () => {
               <option value="Presidente">Presidente</option>
               <option value="Governador">Governador</option>
             </select>
+            {errors.cargo && <div className={styles.error_message}>{errors.cargo}</div>}
           </div>
 
           <PropostaList
@@ -146,6 +172,7 @@ const FormularioCandidato: React.FC = () => {
             placeholder="Email de Contato"
             onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.email && <div className={styles.error_message}>{errors.email}</div>}
 
           <FormField
             id="numero"
@@ -155,6 +182,7 @@ const FormularioCandidato: React.FC = () => {
             placeholder="Número do Candidato"
             onChange={(e) => setNumero(e.target.value)}
           />
+          {errors.numero && <div className={styles.error_message}>{errors.numero}</div>}
 
           <SocialMediaField
             facebook={facebook}
