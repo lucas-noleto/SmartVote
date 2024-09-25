@@ -3,6 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import EditarPropostaModal from './EditarPropostaModal'; 
 import apiUrl from '../../axios/config';  
+import PartidoSelect from './FormularioCandidato/PartidoSelect';
+import CargoSelect from './FormularioCandidato/CargoSelect';
+import SocialMediaField from './FormularioCandidato/SocialMediaField';
 
 const EditarCandidato: React.FC = () => {
   const [candidato, setCandidato] = useState<any>(null);
@@ -23,6 +26,9 @@ const EditarCandidato: React.FC = () => {
   const [instagram, setInstagram] = useState('');
   const [linkedin, setLinkedin] = useState('');
   const [youtube, setYoutube] = useState('');
+
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     apiUrl.get('/partidos')
@@ -98,6 +104,18 @@ const EditarCandidato: React.FC = () => {
     }
   };
 
+  const handleSocialMediaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case 'facebook': setFacebook(value); break;
+      case 'instagram': setInstagram(value); break;
+      case 'linkedin': setLinkedin(value); break;
+      case 'youtube': setYoutube(value); break;
+      case 'email': setEmail(value); break;
+      default: break;
+    }
+  };
+
   if (!candidato) return <div>Carregando...</div>;
 
   return (
@@ -118,26 +136,10 @@ const EditarCandidato: React.FC = () => {
         </div>
 
         {/* Partido */}
-        <div className="mb-3">
-          <label htmlFor="partido" className="form-label">Partido</label>
-          <select className="form-select" id="partido" value={partido} onChange={e => setPartido(e.target.value)}>
-            <option value="">Selecione um partido</option>
-            {partidos.map(partido => (
-              <option key={partido.sigla} value={partido.sigla}>{partido.sigla}</option>
-            ))}
-          </select>
-        </div>
+        <PartidoSelect partido={partido} partidos={partidos} onChange={e => setPartido(e.target.value)} error={errors.partido} />
 
         {/* Cargo */}
-        <div className="mb-3">
-          <label htmlFor="cargo" className="form-label">Cargo</label>
-          <select className="form-select" id="cargo" value={cargo} onChange={e => setCargo(e.target.value)}>
-            <option value="Prefeito">Prefeito</option>
-            <option value="Vereador">Vereador</option>
-            <option value="Senador">Senador</option>
-            <option value="Presidente">Presidente</option>
-          </select>
-        </div>
+        <CargoSelect cargo={cargo} onChange={e => setCargo(e.target.value)} error={errors.cargo} />
 
         {/* Propostas */}
         <div className="mb-3">
@@ -182,25 +184,7 @@ const EditarCandidato: React.FC = () => {
         </div>
 
         {/* Redes Sociais */}
-        <div className="mb-3">
-          <h4>Redes Sociais</h4>
-          <div className="input-group mb-2">
-            <span className="input-group-text"><FaFacebook /></span>
-            <input type="text" className="form-control" placeholder="Facebook" value={facebook} onChange={e => setFacebook(e.target.value)} />
-          </div>
-          <div className="input-group mb-2">
-            <span className="input-group-text"><FaInstagram /></span>
-            <input type="text" className="form-control" placeholder="Instagram" value={instagram} onChange={e => setInstagram(e.target.value)} />
-          </div>
-          <div className="input-group mb-2">
-            <span className="input-group-text"><FaLinkedin /></span>
-            <input type="text" className="form-control" placeholder="LinkedIn" value={linkedin} onChange={e => setLinkedin(e.target.value)} />
-          </div>
-          <div className="input-group mb-2">
-            <span className="input-group-text"><FaYoutube /></span>
-            <input type="text" className="form-control" placeholder="YouTube" value={youtube} onChange={e => setYoutube(e.target.value)} />
-          </div>
-        </div>
+        <SocialMediaField facebook={facebook} instagram={instagram} linkedin={linkedin} youtube={youtube} email={email} onChange={handleSocialMediaChange} />
 
         <button type="submit" className="btn btn-success">Salvar</button>
       </form>
