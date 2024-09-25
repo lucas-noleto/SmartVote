@@ -4,6 +4,9 @@ import SocialMediaField from './SocialMediaField';
 import PropostaList from './PropostaList';
 import FormField from './FormField';
 import CustomButton from './CustomButton';
+import PartidoSelect from './PartidoSelect';
+import CargoSelect from './CargoSelect';
+import UploadField from './UploadField';
 import styles from './FormularioCandidato.module.css';
 import apiUrl from '../../../axios/config';
 
@@ -13,7 +16,7 @@ const FormularioCandidato: React.FC = () => {
   const [partido, setPartido] = useState('');
   const [cargo, setCargo] = useState('prefeito');
   const [propostas, setPropostas] = useState<string[]>([]);
-  const [novaProposta, setNovaProposta] = useState('');
+  const [novaProposta, setNovaProposta] = useState<string>('');
   const [numero, setNumero] = useState('');
   const [partidos, setPartidos] = useState<{ sigla: string; nome: string }[]>([]);
   const [facebook, setFacebook] = useState('');
@@ -21,6 +24,7 @@ const FormularioCandidato: React.FC = () => {
   const [linkedin, setLinkedin] = useState('');
   const [youtube, setYoutube] = useState('');
   const [email, setEmail] = useState('');
+
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -64,6 +68,10 @@ const FormularioCandidato: React.FC = () => {
       setPropostas([...propostas, novaProposta]);
       setNovaProposta('');
     }
+  };
+
+  const handleRemoveProposta = (index: number) => {
+    setPropostas(propostas.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async () => {
@@ -123,81 +131,33 @@ const FormularioCandidato: React.FC = () => {
           />
           {errors.nome && <div className={styles.error_message}>{errors.nome}</div>}
 
-          <div className="mb-3">
-            <label htmlFor="foto" className="form-label">Foto</label>
-            <input type="file" className="form-control" id="foto" accept="image/*" onChange={handleImageUpload} />
-            {errors.foto && <div className={styles.error_message}>{errors.foto}</div>}
-            {foto && <img src={foto as string} alt="Foto do Candidato" className="mt-3" />}
-          </div>
+          <UploadField foto={foto} onUpload={handleImageUpload} error={errors.foto} />
 
-          <div className="mb-3">
-            <label htmlFor="partido" className="form-label">Partido</label>
-            <select className="form-select" id="partido" value={partido} onChange={e => setPartido(e.target.value)}>
-              <option value="">Selecione um partido</option>
-              {partidos.map(partido => (
-                <option key={partido.sigla} value={partido.sigla}>{partido.sigla}</option>
-              ))}
-            </select>
-            {errors.partido && <div className={styles.error_message}>{errors.partido}</div>}
-          </div>
+          <PartidoSelect partido={partido} partidos={partidos} onChange={e => setPartido(e.target.value)} error={errors.partido} />
 
-          <div className="mb-3">
-            <label htmlFor="cargo" className="form-label">Cargo</label>
-            <select className="form-select" id="cargo" value={cargo} onChange={e => setCargo(e.target.value)}>
-              <option value="Prefeito">Prefeito</option>
-              <option value="Vereador">Vereador</option>
-              <option value="Senador">Senador</option>
-              <option value="Presidente">Presidente</option>
-              <option value="Governador">Governador</option>
-            </select>
-            {errors.cargo && <div className={styles.error_message}>{errors.cargo}</div>}
-          </div>
-
-          <PropostaList
-            propostas={propostas}
-            novaProposta={novaProposta}
-            onAddProposta={handleAddProposta}
-            onRemoveProposta={(index) => {
-              setPropostas(propostas.filter((_, i) => i !== index));
-            }}
-            onChangeNovaProposta={(e) => setNovaProposta(e.target.value)}
-          />
-
-          <FormField
-            id="email"
-            label="Email de Contato"
-            type="email"
-            value={email}
-            placeholder="Email de Contato"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {errors.email && <div className={styles.error_message}>{errors.email}</div>}
+          <CargoSelect cargo={cargo} onChange={e => setCargo(e.target.value)} error={errors.cargo} />
 
           <FormField
             id="numero"
-            label="Número do Candidato"
+            label="Número"
             type="text"
             value={numero}
-            placeholder="Número do Candidato"
+            placeholder="Número do candidato"
             onChange={(e) => setNumero(e.target.value)}
           />
           {errors.numero && <div className={styles.error_message}>{errors.numero}</div>}
 
-          <SocialMediaField
-            facebook={facebook}
-            instagram={instagram}
-            linkedin={linkedin}
-            youtube={youtube}
-            email={email}
-            onChange={handleSocialMediaChange}
+          <SocialMediaField facebook={facebook} instagram={instagram} linkedin={linkedin} youtube={youtube} email={email} onChange={handleSocialMediaChange} />
+
+          <PropostaList 
+            propostas={propostas} 
+            novaProposta={novaProposta} 
+            onAddProposta={handleAddProposta} 
+            onRemoveProposta={handleRemoveProposta} 
+            onChangeNovaProposta={(e) => setNovaProposta(e.target.value)} 
           />
 
-          <CustomButton
-            texto="Cadastrar"
-            onClick={handleSubmit}
-            estilo={`btn-success ${styles.btn_custom}`}
-            tipo="submit"
-          />
+          <CustomButton tipo="submit" texto="Cadastrar Candidato" onClick={handleSubmit} estilo='btn-success'/>
         </form>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import EditarPropostaModal from './EditarPropostaModal'; 
@@ -133,10 +132,10 @@ const EditarCandidato: React.FC = () => {
         <div className="mb-3">
           <label htmlFor="cargo" className="form-label">Cargo</label>
           <select className="form-select" id="cargo" value={cargo} onChange={e => setCargo(e.target.value)}>
-            <option value="prefeito">Prefeito</option>
-            <option value="vereador">Vereador</option>
-            <option value="senador">Senador</option>
-            <option value="presidente">Presidente</option>
+            <option value="Prefeito">Prefeito</option>
+            <option value="Vereador">Vereador</option>
+            <option value="Senador">Senador</option>
+            <option value="Presidente">Presidente</option>
           </select>
         </div>
 
