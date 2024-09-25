@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import TabelaCandidatos from './components/TabelaCandidatos';
 import FormularioCandidato from './components/FormularioCandidato/FormularioCandidato';
-import EditarCandidato from './components/EditarCandidato';
+import EditarCandidato from './components/FormularioCandidato/EditarCandidato';
 import VisualizarCandidato from './components/VisualizarCandidato';
 import { useState, useEffect } from 'react';
 import axios from 'axios';

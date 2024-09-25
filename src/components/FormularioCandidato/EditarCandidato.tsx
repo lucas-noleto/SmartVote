@@ -2,19 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import EditarPropostaModal from './EditarPropostaModal'; 
-import apiUrl from '../../axios/config';  
-import PartidoSelect from './FormularioCandidato/PartidoSelect';
-import CargoSelect from './FormularioCandidato/CargoSelect';
-import SocialMediaField from './FormularioCandidato/SocialMediaField';
+import apiUrl from '../../../axios/config';  
+import PartidoSelect from './PartidoSelect';
+import CargoSelect from './CargoSelect';
+import SocialMediaField from './SocialMediaField';
+import UploadField from './UploadField';
+import FormField from './FormField';
+import styles from './FormularioCandidato.module.css'
+import PropostaList from './PropostaList';
 
 const EditarCandidato: React.FC = () => {
   const [candidato, setCandidato] = useState<any>(null);
   const [nome, setNome] = useState('');
-  const [foto, setFoto] = useState('');
+  const [foto, setFoto] = useState<string | ArrayBuffer | null>('');
   const [partido, setPartido] = useState('');
   const [cargo, setCargo] = useState('prefeito');
   const [propostas, setPropostas] = useState<{ texto: string; id: number }[]>([]);
-  const [novaProposta, setNovaProposta] = useState('');
+  const [novaProposta, setNovaProposta] = useState<string>("");
+
   const [email, setEmail] = useState('');
   const [numero, setNumero] = useState('');
   const [partidos, setPartidos] = useState<{ sigla: string; nome: string }[]>([]);
@@ -116,6 +121,21 @@ const EditarCandidato: React.FC = () => {
     }
   };
 
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFoto(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleNovaPropostaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNovaProposta(e.target.value);
+  };
+
   if (!candidato) return <div>Carregando...</div>;
 
   return (
@@ -123,17 +143,19 @@ const EditarCandidato: React.FC = () => {
       <h2 className="mb-4 p-5">Editar Candidato</h2>
       <form className="mb-4" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
         {/* Nome */}
-        <div className="mb-3">
-          <label htmlFor="nome" className="form-label">Nome</label>
-          <input type="text" className="form-control" id="nome" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
-        </div>
+        
+        <FormField
+            id="nome"
+            label="Nome"
+            type="text"
+            value={nome}
+            placeholder="Nome do candidato"
+            onChange={(e) => setNome(e.target.value)}
+          />
+          {errors.nome && <div className={styles.error_message}>{errors.nome}</div>}
 
         {/* Foto */}
-        <div className="mb-3">
-          <label htmlFor="foto" className="form-label">Foto</label>
-          <input type="file" className="form-control" id="foto" onChange={handleFileChange} />
-          {foto && <img src={foto} alt="Preview" style={{ marginTop: '10px', maxWidth: '100px', maxHeight: '100px' }} />}
-        </div>
+        <UploadField foto={foto} onUpload={handleImageUpload} error={errors.foto} />
 
         {/* Partido */}
         <PartidoSelect partido={partido} partidos={partidos} onChange={e => setPartido(e.target.value)} error={errors.partido} />
@@ -142,47 +164,27 @@ const EditarCandidato: React.FC = () => {
         <CargoSelect cargo={cargo} onChange={e => setCargo(e.target.value)} error={errors.cargo} />
 
         {/* Propostas */}
-        <div className="mb-3">
-          <h4>Propostas</h4>
-          {propostas.map((proposta) => (
-            <div key={proposta.id} className="alert alert-info d-flex justify-content-between">
-              <span>{proposta.texto}</span>
-              <div>
-                <button
-                  type="button"
-                  className="btn btn-warning btn-sm me-2"
-                  onClick={() => handleEditProposta(proposta)}
-                >
-                  Editar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleRemoveProposta(proposta.id)}
-                >
-                  Remover
-                </button>
-              </div>
-            </div>
-          ))}
-          <div className="input-group mb-3">
-            <input type="text" className="form-control" placeholder="Nova Proposta" value={novaProposta} onChange={e => setNovaProposta(e.target.value)} />
-            <button type="button" className="btn btn-primary" onClick={handleAddProposta}>Adicionar Proposta</button>
-          </div>
-        </div>
+        <PropostaList
+          propostas={propostas}  // Aqui é { texto: string, id: number }[]
+          novaProposta={novaProposta}
+          onAddProposta={handleAddProposta}
+          onRemoveProposta={handleRemoveProposta}
+          onChangeNovaProposta={handleNovaPropostaChange}
+          onEditProposta={handleEditProposta}  // Passa a função de edição
+        />
 
-        {/* Email de Contato */}
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email de Contato</label>
-          <input type="email" className="form-control" id="email" placeholder="Email de Contato" value={email} onChange={e => setEmail(e.target.value)} />
-        </div>
+
 
         {/* Número do Candidato */}
-        <div className="mb-3">
-          <label htmlFor="numero" className="form-label">Número do Candidato</label>
-          <input type="text" className="form-control" id="numero" placeholder="Número do Candidato" value={numero} onChange={e => setNumero(e.target.value)} />
-        </div>
-
+        <FormField
+            id="numero"
+            label="Número"
+            type="text"
+            value={numero}
+            placeholder="Número do candidato"
+            onChange={(e) => setNumero(e.target.value)}
+          />
+          {errors.numero && <div className={styles.error_message}>{errors.numero}</div>}
         {/* Redes Sociais */}
         <SocialMediaField facebook={facebook} instagram={instagram} linkedin={linkedin} youtube={youtube} email={email} onChange={handleSocialMediaChange} />
 

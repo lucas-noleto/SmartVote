@@ -16,7 +16,7 @@ const FormularioCandidato: React.FC = () => {
   const [partido, setPartido] = useState('');
   const [cargo, setCargo] = useState('prefeito');
   const [propostas, setPropostas] = useState<string[]>([]);
-  const [novaProposta, setNovaProposta] = useState<string>('');
+  const [novaProposta, setNovaProposta] = useState<string>("");
   const [numero, setNumero] = useState('');
   const [partidos, setPartidos] = useState<{ sigla: string; nome: string }[]>([]);
   const [facebook, setFacebook] = useState('');
@@ -116,6 +116,12 @@ const FormularioCandidato: React.FC = () => {
     }
   };
 
+  
+  const handleNovaPropostaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNovaProposta(e.target.value);
+  };
+
+
   return (
     <div className={`container ${styles.container_form}`}>
       <div className={styles.form_wrapper}>
@@ -149,13 +155,14 @@ const FormularioCandidato: React.FC = () => {
 
           <SocialMediaField facebook={facebook} instagram={instagram} linkedin={linkedin} youtube={youtube} email={email} onChange={handleSocialMediaChange} />
 
-          <PropostaList 
-            propostas={propostas} 
-            novaProposta={novaProposta} 
-            onAddProposta={handleAddProposta} 
-            onRemoveProposta={handleRemoveProposta} 
-            onChangeNovaProposta={(e) => setNovaProposta(e.target.value)} 
+          <PropostaList
+            propostas={propostas}  // Aqui continua sendo string[]
+            novaProposta={novaProposta}
+            onAddProposta={handleAddProposta}
+            onRemoveProposta={handleRemoveProposta}
+            onChangeNovaProposta={handleNovaPropostaChange}
           />
+
 
           <CustomButton tipo="submit" texto="Cadastrar Candidato" onClick={handleSubmit} estilo='btn-success'/>
         </form>
